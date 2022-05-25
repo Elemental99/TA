@@ -1,4 +1,0 @@
-// Variables de entorno
-
-PORT = 3000
-MONGODB_CNN = mongodb+srv://Elemental99:1234@cluster0.cto0n.mongodb.net/Bares?retryWrites=true&w=majority
