@@ -61,6 +61,20 @@ const menu_principal3 = async (id) => {
 	} while (opt !== '0');
 };
 
+const submenu2 = async (buscarReservacion, datos) => {
+	var a = 0;
+	do {
+		switch (buscarReservacion) {
+			case 1:
+				return (a = datos[0]._id);
+			case 2:
+				return (a = datos[1]._id);
+			default:
+				break;
+		}
+	} while (buscarReservacion > 2);
+};
+
 const logear = async () => {
 	console.clear();
 	console.log('');
@@ -176,6 +190,45 @@ const BuscarReservacion = async (id) => {
 	}
 };
 
+const EliminarReservacion = async (id) => {
+	console.clear();
+	console.log('');
+	try {
+		const buscar = await axios.get(`${url}${paths.reservacion}` + id);
+		const datos = buscar.data.reservacion;
+		// console.log(datos);
+
+		const { buscarReservacion } = await inquirer.prompt({
+			type: 'rawlist',
+			name: 'buscarReservacion',
+			message: 'Escoja la reservacion a eliminar: '.green,
+			choices: datos.map((item, c) => ({
+				value: c + 1,
+				name: item._id,
+			})),
+		});
+
+		a = await submenu2(buscarReservacion, datos);
+
+		const eliminarReservacion = await axios.delete(
+			`${url}${paths.reservacion}` + a
+		);
+
+		if (eliminarReservacion) {
+			console.log(eliminarReservacion.data);
+			await pausa();
+			await menu_principal3(id);
+		} else {
+			console.log(eliminarReservacion.data.message);
+			await pausa();
+			await menu_principal3(id);
+		}
+	} catch (error) {
+		console.log(error);
+		await pausa();
+		await menu_principal2(id);
+	}
+};
 module.exports = {
 	menu_principal,
 };
