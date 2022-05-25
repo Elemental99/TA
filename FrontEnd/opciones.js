@@ -175,33 +175,20 @@ const register = async () => {
 	}
 };
 
-
 const verBares = async (id) => {
 	console.clear();
 	console.log('');
 	try {
 		const obtenerBar = await axios.get(`${url}${paths.bar}`);
 		// console.log(datos._id);
-		console.log(obtenerBar.data);
-		await pausa();
-		await menu_principal2(id);
-	} catch (error) {
-		console.log(error);
-		await pausa();
-		await menu_principal2(id);
-	}
-};
-
-const verMenus = async (id) => {
-	console.clear();
-	console.log('');
-	try {
-		const obtenerMenu = await axios.get(`${url}${paths.menu}`);
-		const obtenerPlato = await axios.get(`${url}${paths.plato}`);
-		console.log('============== MENU DE LOS BARES ==============');
-		console.log(obtenerMenu.data);
-		console.log('================= PLATOS =====================');
-		console.log(obtenerPlato.data);
+		console.table(obtenerBar.data.bares, [
+			'nombre',
+			'ubicacion',
+			'vende_desayuno',
+			'vende_almuerzo',
+			'horario',
+			'capacidad',
+		]);
 		await pausa();
 		await menu_principal2(id);
 	} catch (error) {
@@ -307,6 +294,24 @@ const EliminarReservacion = async (id) => {
 		await menu_principal2(id);
 	}
 };
+
+const verMenus = async (id) => {
+	console.clear();
+	console.log('');
+	try {
+		const obtenerPlato = await axios.get(`${url}${paths.plato}`);
+		const mostrarPlato = obtenerPlato.data.platos;
+		console.log('================= PLATOS =====================');
+		console.table(mostrarPlato, ['nombre_plato']);
+		await pausa();
+		await menu_principal2(id);
+	} catch (error) {
+		console.log(error.message);
+		await pausa();
+		await menu_principal2(id);
+	}
+};
+
 module.exports = {
 	menu_principal,
 };
