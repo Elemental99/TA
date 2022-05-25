@@ -61,6 +61,36 @@ const menu_principal3 = async (id) => {
 	} while (opt !== '0');
 };
 
+const submenu = async (menu, datos) => {
+	a = '';
+	do {
+		switch (menu) {
+			case 1:
+				return (a = datos[0]._id);
+			case 2:
+				return (a = datos[1]._id);
+			case 3:
+				return (a = datos[2]._id);
+			case 4:
+				return (a = datos[3]._id);
+			case 5:
+				return (a = datos[4]._id);
+			case 6:
+				return (a = datos[5]._id);
+			case 7:
+				return (a = datos[6]._id);
+			case 8:
+				return (a = datos[7]._id);
+			case 9:
+				return (a = datos[8]._id);
+			case 10:
+				return (a = datos[9]._id);
+			default:
+				break;
+		}
+	} while (menu > 5);
+};
+
 const submenu2 = async (buscarReservacion, datos) => {
 	var a = 0;
 	do {
@@ -73,6 +103,22 @@ const submenu2 = async (buscarReservacion, datos) => {
 				break;
 		}
 	} while (buscarReservacion > 2);
+};
+
+const menuRawlist = async (datos) => {
+	c = 0;
+	const menu = [
+		{
+			type: 'rawlist',
+			name: 'menu',
+			message: 'Escoja el menu: '.green,
+			choices: datos.map((item, c) => ({
+				value: c + 1,
+				name: item._id,
+			})),
+		},
+	];
+	return menu;
 };
 
 const logear = async () => {
@@ -160,6 +206,38 @@ const verMenus = async (id) => {
 		await menu_principal2(id);
 	} catch (error) {
 		console.log(error.message);
+		await pausa();
+		await menu_principal2(id);
+	}
+};
+
+const CreacionReservacion = async (id) => {
+	console.clear();
+	console.log('');
+	try {
+		const verMenus = await axios.get(`${url}${paths.menu}`);
+		const datos = verMenus.data.menus;
+		const obtener = await menuRawlist(datos);
+		const { menu } = await inquirer.prompt(obtener);
+
+		a = await submenu(menu, datos);
+		const answers = await inquirer.prompt(reservacioncrear);
+
+		const crearReservacion = await axios.post(
+			`${url}${paths.reservacion}`,
+			{
+				idcliente: id,
+				idmenu: a,
+				fecha: answers['fecha: '],
+				hora: answers['hora: '],
+				descripcion: answers['descripcion: '],
+			}
+		);
+		console.log(crearReservacion.data.message);
+		await pausa();
+		await menu_principal3(id);
+	} catch (error) {
+		console.log(error);
 		await pausa();
 		await menu_principal2(id);
 	}
