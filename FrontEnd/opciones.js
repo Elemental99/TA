@@ -22,6 +22,26 @@ const menu_principal = async () => {
 		}
 	} while (opt !== '0');
 };
+
+const menu_principal2 = async (id) => {
+	let opt = '';
+	do {
+		opt = await menuOp2();
+		switch (opt) {
+			case '1':
+				return verBares(id);
+			case '2':
+				return verMenus(id);
+			case '3':
+				return await menu_principal3(id);
+			case '0':
+				return await menu_principal();
+			default:
+				break;
+		}
+	} while (opt !== '0');
+};
+
 const logear = async () => {
 	console.clear();
 	console.log('');
@@ -73,6 +93,42 @@ const register = async () => {
 		console.log(error);
 		await pausa();
 		await menu_principal();
+	}
+};
+
+
+const verBares = async (id) => {
+	console.clear();
+	console.log('');
+	try {
+		const obtenerBar = await axios.get(`${url}${paths.bar}`);
+		// console.log(datos._id);
+		console.log(obtenerBar.data);
+		await pausa();
+		await menu_principal2(id);
+	} catch (error) {
+		console.log(error);
+		await pausa();
+		await menu_principal2(id);
+	}
+};
+
+const verMenus = async (id) => {
+	console.clear();
+	console.log('');
+	try {
+		const obtenerMenu = await axios.get(`${url}${paths.menu}`);
+		const obtenerPlato = await axios.get(`${url}${paths.plato}`);
+		console.log('============== MENU DE LOS BARES ==============');
+		console.log(obtenerMenu.data);
+		console.log('================= PLATOS =====================');
+		console.log(obtenerPlato.data);
+		await pausa();
+		await menu_principal2(id);
+	} catch (error) {
+		console.log(error.message);
+		await pausa();
+		await menu_principal2(id);
 	}
 };
 
