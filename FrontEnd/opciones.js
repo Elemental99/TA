@@ -5,6 +5,10 @@ const { url, paths } = require('./Rutas/rutas');
 const { pausa } = require('./Rutas/pausa');
 const { login, registrarse, reservacioncrear } = require('./Public/inputs');
 const { menuOp, menuOp2, menuOp3 } = require('./Public/menuOpcion');
+const {
+	validacionLogin,
+	validacionRegister,
+} = require('./middlewares/validacion');
 
 const menu_principal = async () => {
 	let opt = '';
@@ -127,22 +131,25 @@ const logear = async () => {
 	const answers = await inquirer.prompt(login);
 	const user = answers['user: '];
 	const password = answers['password: '];
+	const c = validacionLogin(answers);
 
 	try {
-		const obtenerDatos = await axios.get(`${url}${paths.cliente}`, {
-			params: {
-				user,
-				password,
-			},
-		});
-		console.log(obtenerDatos.data.message);
-		if (obtenerDatos.data.message == 'Cliente logeado') {
-			id = obtenerDatos.data.datos._id;
-			await menu_principal2(id);
-		} else {
-			await pausa();
-			await menu_principal();
+		if (c != 1) {
+			const obtenerDatos = await axios.get(`${url}${paths.cliente}`, {
+				params: {
+					user,
+					password,
+				},
+			});
+			console.log(obtenerDatos.data.message);
+			if (obtenerDatos.data.message == 'Cliente logeado') {
+				id = obtenerDatos.data.datos._id;
+				await menu_principal2(id);
+			}
 		}
+
+		await pausa();
+		await menu_principal();
 	} catch (error) {
 		console.log(error);
 		await pausa();
@@ -154,18 +161,22 @@ const register = async () => {
 	console.clear();
 	console.log('');
 	const answers = await inquirer.prompt(registrarse);
+	const c = validacionRegister(answers);
 
 	try {
-		const registro = await axios.post(`${url}${paths.cliente}`, {
-			nombre_cliente: answers['nombre: '],
-			cedula: answers['cedula: '],
-			edad: answers['edad: '],
-			telefono: answers['telefono: '],
-			facultad: answers['facultad: '],
-			user: answers['user: '],
-			password: answers['password: '],
-		});
-		console.log(registro.data.message);
+		if (c != 1) {
+			const registro = await axios.post(`${url}${paths.cliente}`, {
+				nombre_cliente: answers['nombre: '],
+				cedula: answers['cedula: '],
+				edad: answers['edad: '],
+				telefono: answers['telefono: '],
+				facultad: answers['facultad: '],
+				user: answers['user: '],
+				password: answers['password: '],
+			});
+			console.log(registro.data.message);
+		}
+
 		await pausa();
 		await menu_principal();
 	} catch (error) {
