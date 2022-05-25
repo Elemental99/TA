@@ -241,7 +241,7 @@ const BuscarReservacion = async (id) => {
 		const buscarReservacion = await axios.get(
 			`${url}${paths.reservacion}` + id
 		);
-		if (buscarReservacion) {
+		if (buscarReservacion.data.c == 1) {
 			console.table(buscarReservacion.data.reservacion, [
 				'fecha',
 				'hora',

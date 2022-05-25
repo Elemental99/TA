@@ -78,7 +78,7 @@ const loginCliente = async (req, res) => {
 		}
 	} else {
 		res.status(200).send({
-			message: `El cliente con este nombre ya existe ${body.user}`,
+			message: `El cliente con este nombre no existe ${body.user}`,
 		});
 	}
 };

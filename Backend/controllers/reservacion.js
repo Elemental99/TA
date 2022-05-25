@@ -18,10 +18,12 @@ const obtenerReservacion = async (req, res = response) => {
 	if (reservacion) {
 		res.status(200).send({
 			reservacion,
+			c: 1,
 		});
 	} else {
 		res.status(200).send({
 			message: 'No hay reservaciones',
+			c: 2,
 		});
 	}
 };
