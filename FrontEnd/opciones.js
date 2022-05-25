@@ -42,6 +42,25 @@ const menu_principal2 = async (id) => {
 	} while (opt !== '0');
 };
 
+const menu_principal3 = async (id) => {
+	let opt = '';
+	do {
+		opt = await menuOp3();
+		switch (opt) {
+			case '1':
+				return await CreacionReservacion(id);
+			case '2':
+				return await BuscarReservacion(id);
+			case '3':
+				return await EliminarReservacion(id);
+			case '0':
+				return await menu_principal2(id);
+			default:
+				break;
+		}
+	} while (opt !== '0');
+};
+
 const logear = async () => {
 	console.clear();
 	console.log('');
@@ -127,6 +146,31 @@ const verMenus = async (id) => {
 		await menu_principal2(id);
 	} catch (error) {
 		console.log(error.message);
+		await pausa();
+		await menu_principal2(id);
+	}
+};
+
+const BuscarReservacion = async (id) => {
+	console.clear();
+	console.log('');
+	try {
+		const buscarReservacion = await axios.get(
+			`${url}${paths.reservacion}` + id
+		);
+		if (buscarReservacion) {
+			console.table(buscarReservacion.data.reservacion, [
+				'fecha',
+				'hora',
+				'descripcion',
+			]);
+		} else {
+			console.log(buscarReservacion.data.message);
+		}
+		await pausa();
+		await menu_principal3(id);
+	} catch (error) {
+		console.log(error);
 		await pausa();
 		await menu_principal2(id);
 	}
