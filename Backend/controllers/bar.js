@@ -9,10 +9,16 @@ const obtenerBares = async (req, res = response) => {
 		await Bar.countDocuments(query),
 		await Bar.find(query),
 	]);
-	res.json({
-		total,
-		bares,
-	});
+	if (bares) {
+		res.status(200).send({
+			total,
+			bares,
+		});
+	} else {
+		res.status(200).send({
+			message: 'Bares not found',
+		});
+	}
 };
 
 // const obtenerBar = async (req, res = response) => {

@@ -4,9 +4,15 @@ const { Menu } = require('../models');
 const obtenerMenus = async (req, res = response) => {
 	const query = { estado: true };
 	const [menus] = await Promise.all([Menu.find(query)]);
-	res.status(200).send({
-		menus,
-	});
+	if (menus) {
+		res.status(200).send({
+			menus,
+		});
+	} else {
+		res.status(404).send({
+			message: 'Menu not found',
+		});
+	}
 };
 
 // const obtenerMenu = async (req, res = response) => {

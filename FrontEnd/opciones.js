@@ -181,14 +181,18 @@ const verBares = async (id) => {
 	try {
 		const obtenerBar = await axios.get(`${url}${paths.bar}`);
 		// console.log(datos._id);
-		console.table(obtenerBar.data.bares, [
-			'nombre',
-			'ubicacion',
-			'vende_desayuno',
-			'vende_almuerzo',
-			'horario',
-			'capacidad',
-		]);
+		if (obtenerBar) {
+			console.table(obtenerBar.data.bares, [
+				'nombre',
+				'ubicacion',
+				'vende_desayuno',
+				'vende_almuerzo',
+				'horario',
+				'capacidad',
+			]);
+		} else {
+			console.log(obtenerBar.data.message);
+		}
 		await pausa();
 		await menu_principal2(id);
 	} catch (error) {
@@ -301,8 +305,12 @@ const verMenus = async (id) => {
 	try {
 		const obtenerPlato = await axios.get(`${url}${paths.plato}`);
 		const mostrarPlato = obtenerPlato.data.platos;
-		console.log('================= PLATOS =====================');
-		console.table(mostrarPlato, ['nombre_plato']);
+		if (mostrarPlato) {
+			console.log('================= PLATOS =====================');
+			console.table(mostrarPlato, ['nombre_plato']);
+		} else {
+			console.log(mostrarPlato.data.message);
+		}
 		await pausa();
 		await menu_principal2(id);
 	} catch (error) {
