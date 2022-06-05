@@ -1,24 +1,24 @@
-require('colors');
-const inquirer = require('inquirer');
-const axios = require('axios');
-const { login, registrarse, reservacioncrear } = require('./Public/inputs');
-const { validacionLogin, validacionRegister } = require('./middlewares/validacion');
-const { url, paths } = require('./Rutas/rutas');
-const { pausa } = require('./Rutas/pausa');
-const { menuRawlist, submenu, ElegirReservacion, submenu2 } = require('./Public/listaMenu');
-const { menuOp, menuOp2, menuOp3 } = require('./Public/menuOpcion');
+require ('colors');
+const axios = require ('axios');
+const inquirer = require ('inquirer');
+const { login, registrarse, reservacioncrear } = require ('./Public/inputs');
+const { validacionLogin, validacionRegister } = require ('./middlewares/validacion');
+const { url, paths } = require ('./Rutas/rutas');
+const { pausa } = require ('./Rutas/pausa');
+const { menuRawlist, submenu, ElegirReservacion, submenu2 } = require ('./Public/listaMenu');
+const { menuOp, menuOp2, menuOp3 } = require ('./Public/menuOpcion');
 
 const menu_principal = async () => {
     let opt = '';
     do {
-        opt = await menuOp();
+        opt = await menuOp ();
         switch ( opt ) {
             case '1':
-                return logear();
+                return logear ();
             case '2':
-                return register();
+                return register ();
             case '0':
-                process.exit(0);
+                process.exit (0);
         }
     } while ( opt !== '0' );
 };
@@ -26,16 +26,16 @@ const menu_principal = async () => {
 const menu_principal2 = async (id) => {
     let opt = '';
     do {
-        opt = await menuOp2();
+        opt = await menuOp2 ();
         switch ( opt ) {
             case '1':
-                return verBares(id);
+                return verBares (id);
             case '2':
-                return verMenus(id);
+                return verMenus (id);
             case '3':
-                return await menu_principal3(id);
+                return await menu_principal3 (id);
             case '0':
-                return await menu_principal();
+                return await menu_principal ();
             default:
                 break;
         }
@@ -45,16 +45,16 @@ const menu_principal2 = async (id) => {
 const menu_principal3 = async (id) => {
     let opt = '';
     do {
-        opt = await menuOp3();
+        opt = await menuOp3 ();
         switch ( opt ) {
             case '1':
-                return await CreacionReservacion(id);
+                return await CreacionReservacion (id);
             case '2':
-                return await BuscarReservacion(id);
+                return await BuscarReservacion (id);
             case '3':
-                return await EliminarReservacion(id);
+                return await EliminarReservacion (id);
             case '0':
-                return await menu_principal2(id);
+                return await menu_principal2 (id);
             default:
                 break;
         }
@@ -62,190 +62,214 @@ const menu_principal3 = async (id) => {
 };
 
 const logear = async () => {
-    console.clear();
-    console.log('');
-    const answers = await inquirer.prompt(login);
+    console.clear ();
+    console.log ('');
+    const answers = await inquirer.prompt (login);
     const user = answers['user: '];
     const password = answers['password: '];
-    const c = validacionLogin(answers);
-
+    const c = validacionLogin (answers);
+    
     try {
         if ( c !== 1 ) {
-            const obtenerDatos = await axios.get(`${ url }${ paths.cliente }`, {
-                params: {
-                    user,
-                    password
+            const obtenerDatos = await axios.get (
+                `${ url }${ paths.cliente }`,
+                {
+                    params: {
+                        user,
+                        password
+                    }
                 }
-            });
-            console.log(obtenerDatos.data.message);
+            );
+            console.log (obtenerDatos.data.message);
             if ( obtenerDatos.data.message === 'Cliente logeado' ) {
                 const id = obtenerDatos.data.datos['_id'];
-                await menu_principal2(id);
+                await menu_principal2 (id);
             }
         }
-
-        await pausa();
-        await menu_principal();
-    } catch (error) {
-        console.error(error);
+        
+        await pausa ();
+        await menu_principal ();
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
 const register = async () => {
-    console.clear();
-    console.log('');
-    const answers = await inquirer.prompt(registrarse);
-    const c = validacionRegister(answers);
-
+    console.clear ();
+    console.log ('');
+    const answers = await inquirer.prompt (registrarse);
+    const c = validacionRegister (answers);
+    
     try {
         if ( c !== 1 ) {
-            const registro = await axios.post(`${ url }${ paths.cliente }`, {
-                nombre_cliente: answers['nombre: '],
-                cedula: answers['cedula: '],
-                edad: answers['edad: '],
-                telefono: answers['telefono: '],
-                facultad: answers['facultad: '],
-                user: answers['user: '],
-                password: answers['password: ']
-            });
-            console.log(registro.data.message);
+            const registro = await axios.post (
+                `   ${ url }${ paths.cliente }`,
+                {
+                    nombre_cliente: answers['nombre: '],
+                    cedula        : answers['cedula: '],
+                    edad          : answers['edad: '],
+                    telefono      : answers['telefono: '],
+                    facultad      : answers['facultad: '],
+                    user          : answers['user: '],
+                    password      : answers['password: ']
+                }
+            );
+            console.log (registro.data.message);
         }
-
-        await pausa();
-        await menu_principal();
-    } catch (error) {
-        console.error(error);
+        
+        await pausa ();
+        await menu_principal ();
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
 const verBares = async (id) => {
-    console.clear();
-    console.log('');
+    console.clear ();
+    console.log ('');
     try {
-        const obtenerBar = await axios.get(`${ url }${ paths.bar }`);
+        const obtenerBar = await axios.get (`${ url }${ paths.bar }`);
         // console.log(datos._id);
         if ( obtenerBar ) {
-            console.table(obtenerBar.data.bares, [
-                'nombre',
-                'ubicacion',
-                'vende_desayuno',
-                'vende_almuerzo',
-                'horario',
-                'capacidad'
-            ]);
+            console.table (obtenerBar.data.bares,
+                [
+                    'nombre',
+                    'ubicacion',
+                    'vende_desayuno',
+                    'vende_almuerzo',
+                    'horario',
+                    'capacidad'
+                ]
+            );
         } else {
-            console.log(obtenerBar.data.message);
+            console.log (obtenerBar.data.message);
         }
-        await pausa();
-        await menu_principal2(id);
-    } catch (error) {
-        console.error(error);
+        await pausa ();
+        await menu_principal2 (id);
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
 const CreacionReservacion = async (id) => {
-    console.clear();
-    console.log('');
+    console.clear ();
+    console.log ('');
     try {
-        const verMenus = await axios.get(`${ url }${ paths.menu }`);
+        const verMenus = await axios.get (`${ url }${ paths.menu }`);
         const datos = verMenus.data.menus;
-        const obtener = await menuRawlist(datos);
-        const { menu } = await inquirer.prompt(obtener);
-
-        const EscojerIdMenu = await submenu(menu, datos);
-        const answers = await inquirer.prompt(reservacioncrear);
-
-        const crearReservacion = await axios.post(
+        const obtener = await menuRawlist (datos);
+        const { menu } = await inquirer.prompt (obtener);
+        
+        const EscojerIdMenu = await submenu (
+            menu,
+            datos
+        );
+        const answers = await inquirer.prompt (reservacioncrear);
+        
+        const crearReservacion = await axios.post (
             `${ url }${ paths.reservacion }`,
             {
-                idcliente: id,
-                idmenu: EscojerIdMenu,
-                fecha: answers['fecha: '],
-                hora: answers['hora: '],
+                idcliente  : id,
+                idmenu     : EscojerIdMenu,
+                fecha      : answers['fecha: '],
+                hora       : answers['hora: '],
                 descripcion: answers['descripcion: ']
             }
         );
-        console.log(crearReservacion.data.message);
-        await pausa();
-        await menu_principal3(id);
-    } catch (error) {
-        console.error(error);
+        console.log (crearReservacion.data.message);
+        await pausa ();
+        await menu_principal3 (id);
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
 const BuscarReservacion = async (id) => {
-    console.clear();
-    console.log('');
+    console.clear ();
+    console.log ('');
     try {
-        const buscarReservacion = await axios.get(
-            `${ url }${ paths.reservacion }` + id
+        const buscarReservacion = await axios.get (
+            `${ url }${ paths.reservacion }` +
+            id
         );
         const datos = buscarReservacion.data.reservacion;
         if ( datos.length === 0 ) {
-            console.log('No hay reservaciones');
-            await pausa();
-            await menu_principal3(id);
+            console.log ('No hay reservaciones');
+            await pausa ();
+            await menu_principal3 (id);
         }
-        console.table(datos, [
-            'fecha',
-            'hora',
-            'descripcion'
-        ]);
-
-        await pausa();
-        await menu_principal3(id);
-    } catch (error) {
-        console.error(error);
+        console.table (
+            datos,
+            [
+                'fecha',
+                'hora',
+                'descripcion'
+            ]
+        );
+        
+        await pausa ();
+        await menu_principal3 (id);
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
 const EliminarReservacion = async (id) => {
-    console.clear();
-    console.log('');
-
+    console.clear ();
+    console.log ('');
+    
     try {
-        const buscar = await axios.get(`${ url }${ paths.reservacion }` + id);
+        const buscar = await axios.get (
+            `${ url }${ paths.reservacion }` +
+            id);
         const datos = buscar.data.reservacion;
-
+        
         if ( datos.length === 0 ) {
-            console.log('No hay reservaciones creadas');
-            await pausa();
-            await menu_principal3(id);
+            console.log ('No hay reservaciones creadas');
+            await pausa ();
+            await menu_principal3 (id);
         }
-
-        const obtener = await ElegirReservacion(datos);
-        const { buscarReservacion } = await inquirer.prompt(obtener);
-        const buscarReservaciones = await submenu2(buscarReservacion, datos);
-
-        const eliminarReservacion = await axios.delete(
-            `${ url }${ paths.reservacion }` + buscarReservaciones
+        
+        const obtener = await ElegirReservacion (datos);
+        const { buscarReservacion } = await inquirer.prompt (obtener);
+        const buscarReservaciones = await submenu2 (
+            buscarReservacion,
+            datos
         );
-
-        console.log(eliminarReservacion.data);
-        await pausa();
-        await menu_principal3(id);
-    } catch (error) {
-        console.error(error);
+        
+        const eliminarReservacion = await axios.delete (
+            `${ url }${ paths.reservacion }` +
+            buscarReservaciones
+        );
+        
+        console.log (eliminarReservacion.data);
+        await pausa ();
+        await menu_principal3 (id);
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
 const verMenus = async (id) => {
-    console.clear();
-    console.log('');
+    console.clear ();
+    console.log ('');
     try {
-        const obtenerPlato = await axios.get(`${ url }${ paths.plato }`);
+        const obtenerPlato = await axios.get (`${ url }${ paths.plato }`);
         const mostrarPlato = obtenerPlato.data.platos;
-
+        
         if ( mostrarPlato.length !== 0 ) {
-            console.log('================= PLATOS =====================');
-            console.table(mostrarPlato, ['nombre_plato']);
+            console.log ('================= PLATOS =====================');
+            console.table (
+                mostrarPlato,
+                ['nombre_plato']
+            );
         } else {
-            console.log(mostrarPlato.data.message);
+            console.log (mostrarPlato.data.message);
         }
-        await pausa();
-        await menu_principal2(id);
-    } catch (error) {
-        console.error(error);
+        await pausa ();
+        await menu_principal2 (id);
+    } catch ( error ) {
+        console.error (error);
     }
 };
 
