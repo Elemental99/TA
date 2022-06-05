@@ -1,14 +1,12 @@
 require('colors');
 const inquirer = require('inquirer');
 const axios = require('axios');
+const { login, registrarse, reservacioncrear } = require('./Public/inputs');
+const { validacionLogin, validacionRegister } = require('./middlewares/validacion');
 const { url, paths } = require('./Rutas/rutas');
 const { pausa } = require('./Rutas/pausa');
-const { login, registrarse, reservacioncrear, ElegirReservacion, menuRawlist } = require('./Public/inputs');
+const { menuRawlist, submenu, ElegirReservacion, submenu2 } = require('./Public/listaMenu');
 const { menuOp, menuOp2, menuOp3 } = require('./Public/menuOpcion');
-const {
-    validacionLogin,
-    validacionRegister
-} = require('./middlewares/validacion');
 
 const menu_principal = async () => {
     let opt = '';
@@ -62,29 +60,6 @@ const menu_principal3 = async (id) => {
         }
     } while ( opt !== '0' );
 };
-
-const submenu = async (menu, datos) => {
-    let a = 0;
-    datos.map((item, c) => {
-        c += 1;
-        if ( c === menu ) {
-            a = item['_id'];
-        }
-    });
-    return a;
-};
-
-const submenu2 = async (buscarReservacion, datos) => {
-    let a = 0;
-    datos.map((item, c) => {
-        c += 1;
-        if ( c === buscarReservacion ) {
-            a = item['_id'];
-        }
-    });
-    return a;
-};
-
 
 const logear = async () => {
     console.clear();
@@ -205,15 +180,18 @@ const BuscarReservacion = async (id) => {
         const buscarReservacion = await axios.get(
             `${ url }${ paths.reservacion }` + id
         );
-        if ( buscarReservacion.data.c === 1 ) {
-            console.table(buscarReservacion.data.reservacion, [
-                'fecha',
-                'hora',
-                'descripcion'
-            ]);
-        } else {
-            console.log(buscarReservacion.data.message);
+        const datos = buscarReservacion.data.reservacion;
+        if ( datos.length === 0 ) {
+            console.log('No hay reservaciones');
+            await pausa();
+            await menu_principal3(id);
         }
+        console.table(datos, [
+            'fecha',
+            'hora',
+            'descripcion'
+        ]);
+
         await pausa();
         await menu_principal3(id);
     } catch (error) {
@@ -230,7 +208,7 @@ const EliminarReservacion = async (id) => {
         const datos = buscar.data.reservacion;
 
         if ( datos.length === 0 ) {
-            console.log('No hay reservaciones');
+            console.log('No hay reservaciones creadas');
             await pausa();
             await menu_principal3(id);
         }
@@ -243,11 +221,9 @@ const EliminarReservacion = async (id) => {
             `${ url }${ paths.reservacion }` + buscarReservaciones
         );
 
-
         console.log(eliminarReservacion.data);
         await pausa();
         await menu_principal3(id);
-
     } catch (error) {
         console.error(error);
     }
@@ -259,7 +235,8 @@ const verMenus = async (id) => {
     try {
         const obtenerPlato = await axios.get(`${ url }${ paths.plato }`);
         const mostrarPlato = obtenerPlato.data.platos;
-        if ( mostrarPlato ) {
+
+        if ( mostrarPlato.length !== 0 ) {
             console.log('================= PLATOS =====================');
             console.table(mostrarPlato, ['nombre_plato']);
         } else {

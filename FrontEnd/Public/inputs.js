@@ -67,36 +67,8 @@ const reservacioncrear = [
     }
 ];
 
-const ElegirReservacion = async (datos) => {
-    return {
-        type: 'rawlist',
-        name: 'buscarReservacion',
-        message: 'Escoja la reservacion a eliminar: '.green,
-        choices: datos.map((item, c) => ({
-            value: c + 1,
-            name: item['_id']
-        }))
-    };
-};
-
-const menuRawlist = async (datos) => {
-    return [
-        {
-            type: 'rawlist',
-            name: 'menu',
-            message: 'Escoja el menu: '.green,
-            choices: datos.map((item, c) => ({
-                value: c + 1,
-                name: item['_id']
-            }))
-        }
-    ];
-};
-
 module.exports = {
     login,
     registrarse,
-    reservacioncrear,
-    ElegirReservacion,
-    menuRawlist
+    reservacioncrear
 };
