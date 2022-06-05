@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const axios = require('axios');
 const { url, paths } = require('./Rutas/rutas');
 const { pausa } = require('./Rutas/pausa');
-const { login, registrarse, reservacioncrear } = require('./Public/inputs');
+const { login, registrarse, reservacioncrear, ElegirReservacion, menuRawlist } = require('./Public/inputs');
 const { menuOp, menuOp2, menuOp3 } = require('./Public/menuOpcion');
 const {
     validacionLogin,
@@ -65,61 +65,26 @@ const menu_principal3 = async (id) => {
 
 const submenu = async (menu, datos) => {
     let a = 0;
-    do {
-        switch ( menu ) {
-            case 1:
-                return a = datos[0]['_id'];
-            case 2:
-                return a = datos[1]['_id'];
-            case 3:
-                return a = datos[2]['_id'];
-            case 4:
-                return a = datos[3]['_id'];
-            case 5:
-                return a = datos[4]['_id'];
-            case 6:
-                return a = datos[5]['_id'];
-            case 7:
-                return a = datos[6]['_id'];
-            case 8:
-                return a = datos[7]['_id'];
-            case 9:
-                return a = datos[8]['_id'];
-            case 10:
-                return a = datos[9]['_id'];
-            default:
-                break;
+    datos.map((item, c) => {
+        c += 1;
+        if ( c === menu ) {
+            a = item['_id'];
         }
-    } while ( menu > 5 );
+    });
+    return a;
 };
 
 const submenu2 = async (buscarReservacion, datos) => {
     let a = 0;
-    do {
-        switch ( buscarReservacion ) {
-            case 1:
-                return (a = datos[0]['_id']);
-            case 2:
-                return (a = datos[1]['_id']);
-            default:
-                break;
+    datos.map((item, c) => {
+        c += 1;
+        if ( c === buscarReservacion ) {
+            a = item['_id'];
         }
-    } while ( buscarReservacion > 2 );
+    });
+    return a;
 };
 
-const menuRawlist = async (datos) => {
-    return [
-        {
-            type: 'rawlist',
-            name: 'menu',
-            message: 'Escoja el menu: '.green,
-            choices: datos.map((item, c) => ({
-                value: c,
-                name: item['_id']
-            }))
-        }
-    ];
-};
 
 const logear = async () => {
     console.clear();
@@ -147,9 +112,7 @@ const logear = async () => {
         await pausa();
         await menu_principal();
     } catch (error) {
-        console.log(error);
-        await pausa();
-        await menu_principal();
+        console.error(error);
     }
 };
 
@@ -176,9 +139,7 @@ const register = async () => {
         await pausa();
         await menu_principal();
     } catch (error) {
-        console.log(error);
-        await pausa();
-        await menu_principal();
+        console.error(error);
     }
 };
 
@@ -203,9 +164,7 @@ const verBares = async (id) => {
         await pausa();
         await menu_principal2(id);
     } catch (error) {
-        console.log(error.message);
-        await pausa();
-        await menu_principal2(id);
+        console.error(error);
     }
 };
 
@@ -218,14 +177,14 @@ const CreacionReservacion = async (id) => {
         const obtener = await menuRawlist(datos);
         const { menu } = await inquirer.prompt(obtener);
 
-        const a = await submenu(menu, datos);
+        const EscojerIdMenu = await submenu(menu, datos);
         const answers = await inquirer.prompt(reservacioncrear);
 
         const crearReservacion = await axios.post(
             `${ url }${ paths.reservacion }`,
             {
                 idcliente: id,
-                idmenu: a,
+                idmenu: EscojerIdMenu,
                 fecha: answers['fecha: '],
                 hora: answers['hora: '],
                 descripcion: answers['descripcion: ']
@@ -235,9 +194,7 @@ const CreacionReservacion = async (id) => {
         await pausa();
         await menu_principal3(id);
     } catch (error) {
-        console.log(error);
-        await pausa();
-        await menu_principal2(id);
+        console.error(error);
     }
 };
 
@@ -260,49 +217,39 @@ const BuscarReservacion = async (id) => {
         await pausa();
         await menu_principal3(id);
     } catch (error) {
-        console.log(error);
-        await pausa();
-        await menu_principal2(id);
+        console.error(error);
     }
 };
 
 const EliminarReservacion = async (id) => {
     console.clear();
     console.log('');
+
     try {
         const buscar = await axios.get(`${ url }${ paths.reservacion }` + id);
         const datos = buscar.data.reservacion;
-        // console.log(datos);
 
-        const { buscarReservacion } = await inquirer.prompt({
-            type: 'rawlist',
-            name: 'buscarReservacion',
-            message: 'Escoja la reservacion a eliminar: '.green,
-            choices: datos.map((item, c) => ({
-                value: c + 1,
-                name: item['_id']
-            }))
-        });
-
-        const a = await submenu2(buscarReservacion, datos);
-
-        const eliminarReservacion = await axios.delete(
-            `${ url }${ paths.reservacion }` + a
-        );
-
-        if ( eliminarReservacion ) {
-            console.log(eliminarReservacion.data);
-            await pausa();
-            await menu_principal3(id);
-        } else {
-            console.log(eliminarReservacion.data.message);
+        if ( datos.length === 0 ) {
+            console.log('No hay reservaciones');
             await pausa();
             await menu_principal3(id);
         }
-    } catch (error) {
-        console.log(error);
+
+        const obtener = await ElegirReservacion(datos);
+        const { buscarReservacion } = await inquirer.prompt(obtener);
+        const buscarReservaciones = await submenu2(buscarReservacion, datos);
+
+        const eliminarReservacion = await axios.delete(
+            `${ url }${ paths.reservacion }` + buscarReservaciones
+        );
+
+
+        console.log(eliminarReservacion.data);
         await pausa();
-        await menu_principal2(id);
+        await menu_principal3(id);
+
+    } catch (error) {
+        console.error(error);
     }
 };
 
@@ -321,9 +268,7 @@ const verMenus = async (id) => {
         await pausa();
         await menu_principal2(id);
     } catch (error) {
-        console.log(error.message);
-        await pausa();
-        await menu_principal2(id);
+        console.error(error);
     }
 };
 
