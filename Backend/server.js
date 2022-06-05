@@ -15,10 +15,11 @@ class servidor {
 			plato: '/api/plato',
 			reservacion: '/api/reservacion',
 		};
-		this.conectarDB();
+		this.conectarDB().then();
 		this.middlewares();
 		this.routes();
-		this._express = express().use(this.app);
+		this.router.use('/Bares/V1', this.app)
+		this._express = express().use(this.router);
 	}
 
 	async conectarDB() {

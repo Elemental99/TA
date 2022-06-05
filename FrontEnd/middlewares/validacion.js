@@ -1,14 +1,14 @@
 function validacionLogin(answers) {
-	c = 0;
+	let c = 0;
 	const user = answers['user: '];
 	const password = answers['password: '];
 
-	if (user == null || user.length == 0 || /^\s+$/.test(user)) {
+	if (user == null || user.length === 0 || /^\s+$/.test(user)) {
 		console.log('Ingrese su Usuario Por Favor');
 		c = 1;
 	}
 
-	if (password == null || password.length == 0 || /^\s+$/.test(password)) {
+	if (password == null || password.length === 0 || /^\s+$/.test(password)) {
 		console.log('Ingrese la contraseña Por Favor');
 		c = 1;
 	}
@@ -16,7 +16,7 @@ function validacionLogin(answers) {
 }
 
 function validacionRegister(answers) {
-	c = 0;
+	let c = 0;
 	const nombre = answers['nombre: '];
 	const cedula = answers['cedula: '];
 	const edad = answers['edad: '];
@@ -40,7 +40,7 @@ function validacionRegister(answers) {
 		}
 	}
 
-	if (edad == null || edad.length == 0 || /^\s+$/.test(edad)) {
+	if (edad == null || edad.length === 0 || /^\s+$/.test(edad)) {
 		console.log('Escriba su edad Por Favor');
 		c = 1;
 	} else {
@@ -60,12 +60,12 @@ function validacionRegister(answers) {
 		}
 	}
 
-	if (facultad == null || facultad.length == 0 || /^\s+$/.test(facultad)) {
+	if (facultad == null || facultad.length === 0 || /^\s+$/.test(facultad)) {
 		console.log('Ingrese su facultad Por Favor');
 		c = 1;
 	}
 
-	if (user == null || user.length == 0 || /^\s+$/.test(user)) {
+	if (user == null || user.length === 0 || /^\s+$/.test(user)) {
 		console.log('Ingrese su Usuario Por Favor');
 		c = 1;
 	} else {
@@ -75,7 +75,7 @@ function validacionRegister(answers) {
 		}
 	}
 
-	if (password == null || password.length == 0 || /^\s+$/.test(password)) {
+	if (password == null || password.length === 0 || /^\s+$/.test(password)) {
 		console.log('Ingrese la contraseña Por Favor');
 		c = 1;
 	} else {

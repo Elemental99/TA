@@ -21,20 +21,21 @@ const jwt = require('../helpers/jwt');
 // };
 
 const crearCliente = async (req, res = response) => {
-	const body = req.body;
+    const body = req.body;
 
-	const clienteExiste = await Cliente.findOne({ user: body.user });
-	if (clienteExiste) {
-		res.status(200).json({
-			message: `El cliente con este usuario ya existe ${clienteExiste.user}`,
-		});
-	}
+    const clienteExiste = await Cliente.findOne({ user: body.user });
+    if ( clienteExiste ) {
+        const { user } = clienteExiste;
+        res.status(200).json({
+            message: `El cliente con este usuario ya existe ${ user }`
+        });
+    }
 
-	const cliente = new Cliente(body);
-	await cliente.save();
-	res.status(200).send({
-		message: 'Usuario registrado',
-	});
+    const cliente = new Cliente(body);
+    await cliente.save();
+    res.status(200).send({
+        message: 'Usuario registrado'
+    });
 };
 
 // const actualizarCliente = async (req, res = response) => {
@@ -58,36 +59,37 @@ const crearCliente = async (req, res = response) => {
 // };
 
 const loginCliente = async (req, res) => {
-	const body = req.query;
-	const clientelogeado = await Cliente.findOne({ user: body.user });
+    const body = req.query;
+    const clientelogeado = await Cliente.findOne({ user: body.user });
 
-	if (clientelogeado) {
-		if (
-			body.user == clientelogeado.user &&
-			body.password == clientelogeado.password
-		) {
-			res.status(200).send({
-				jwt: jwt.createToken(clientelogeado),
-				message: 'Cliente logeado',
-				datos: clientelogeado,
-			});
-		} else {
-			res.status(200).send({
-				message: `Cliente no encontrado`,
-			});
-		}
-	} else {
-		res.status(200).send({
-			message: `El cliente con este nombre no existe ${body.user}`,
-		});
-	}
+    if ( clientelogeado ) {
+        const { password, user } = clientelogeado;
+        if (
+            body.user === user &&
+            body.password === password
+        ) {
+            res.status(200).send({
+                jwt: jwt.createToken(clientelogeado),
+                message: 'Cliente logeado',
+                datos: clientelogeado
+            });
+        } else {
+            res.status(200).send({
+                message: `Cliente no encontrado`
+            });
+        }
+    } else {
+        res.status(200).send({
+            message: `El cliente con este nombre no existe ${ body.user }`
+        });
+    }
 };
 
 module.exports = {
-	crearCliente,
-	// obtenerCliente,
-	// obtenerClientes,
-	// actualizarCliente,
-	// borrarCliente,
-	loginCliente,
+    crearCliente,
+    // obtenerCliente,
+    // obtenerClientes,
+    // actualizarCliente,
+    // borrarCliente,
+    loginCliente
 };
