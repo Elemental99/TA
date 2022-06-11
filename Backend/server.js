@@ -18,7 +18,7 @@ class servidor {
 		this.conectarDB().then();
 		this.middlewares();
 		this.routes();
-		this.router.use('/Bares/V1', this.app)
+		this.router.use('/Bares/V1', this.app);
 		this._express = express().use(this.router);
 	}
 
