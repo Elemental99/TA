@@ -1,0 +1,46 @@
+<div class="login">
+    <form class="custom-form" (ngSubmit)="login()" #form="ngForm">
+        <h1>Login</h1>
+        <input
+            type="text"
+            #userValid="ngModel"
+            [(ngModel)]="user"
+            name="user"
+            minlength=4
+            placeholder="User"
+            class="form-control"
+            required
+            [ngClass]="{'is-valid': !userValid.invalid, 'is-invalid':
+            userValid.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">
+            <div *ngIf="userValid.errors?.['minlength']">
+                El usuario debe tener al menos 4 caracteres
+            </div>
+            <div *ngIf="userValid.errors?.['required']">
+                El nombre de usuario es requerido
+            </div>
+        </div>
+        <input
+            type="password"
+            #passwordValid="ngModel"
+            [(ngModel)]="password"
+            name="password"
+            minlength=4
+            placeholder="Password"
+            class="form-control"
+            required
+            [ngClass]="{'is-valid': !passwordValid.invalid, 'is-invalid': passwordValid.invalid}"
+        />
+        <div class="invalid-feedback" *ngIf="passwordValid.invalid && (passwordValid.dirty ||
+        passwordValid.touched)">
+            <div *ngIf="passwordValid.errors?.['minlength']">
+                La contraseña debe tener al menos 4 caracteres
+            </div>
+            <div *ngIf="passwordValid.errors?.['required']">
+                La contraseña es requerida
+            </div>
+        </div>
+        <button type="submit" [disabled]="!form.valid" class="signup-btn">Log in</button>
+    </form>
+</div>

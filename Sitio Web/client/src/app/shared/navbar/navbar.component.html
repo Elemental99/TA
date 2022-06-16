@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" [routerLink]="['/home']">Bares ULEAM</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-db-toggle="collapse"
+            data-db-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon" id="navbarNavAltMarkup"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ng-container
+                *ngIf="!(user$ | async); else logoutTemplate">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/login']">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/register']">Register
+                        </a>
+                    </li>
+                </ul>
+            </ng-container>
+
+            <ng-template #logoutTemplate>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            [routerLink]="['/login']"
+                            (click)="logout()"
+                        >
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </ng-template>
+        </div>
+    </div>
+</nav>
