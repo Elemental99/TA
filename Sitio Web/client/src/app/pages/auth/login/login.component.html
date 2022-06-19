@@ -13,7 +13,8 @@
             [ngClass]="{'is-valid': !userValid.invalid, 'is-invalid':
             userValid.invalid}"
         />
-        <div class="invalid-feedback" *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">
+        <div class="invalid-feedback"
+             *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">
             <div *ngIf="userValid.errors?.['minlength']">
                 El usuario debe tener al menos 4 caracteres
             </div>
@@ -41,6 +42,8 @@
                 La contraseña es requerida
             </div>
         </div>
-        <button type="submit" [disabled]="!form.valid" class="signup-btn">Log in</button>
+        <button type="submit" [disabled]="!form.valid" class="signup-btn">Log
+            in
+        </button>
     </form>
 </div>

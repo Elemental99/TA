@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { clientService } from '../../services/clientService.service';
+import { Component, OnInit } from '@angular/core'
+import { clientService } from '../../services/clientService.service'
 
 @Component(
     {
@@ -8,7 +8,7 @@ import { clientService } from '../../services/clientService.service';
         styleUrls  : ['./navbar.component.css']
     })
 export class NavbarComponent implements OnInit {
-    public user$ = this.clientService.client$;
+    public user$ = this.clientService.client$
 
     constructor(
         private readonly clientService: clientService,
@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logout(): void {
-        this.clientService.deleteToken();
+        this.clientService.deleteToken()
     }
 
 }

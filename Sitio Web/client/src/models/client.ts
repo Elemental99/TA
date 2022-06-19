@@ -1,10 +1,10 @@
 export interface IClient {
-    _id?: String;
-    nombre_cliente: String
-    cedula: String
-    edad: Number
-    telefono: Number
-    facultad: String
-    user: String
-    password: String
+    _id?: string;
+    nombre_cliente: string
+    cedula: string
+    edad: number
+    telefono: number
+    facultad: string
+    user: string
+    password: string
 }

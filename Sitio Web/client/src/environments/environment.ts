@@ -4,8 +4,9 @@
 
 export const environment = {
     production: false,
-    API_URL: 'http://localhost:3000/v1/sextoA/api',
-};
+    API_URL   : 'http://localhost:3000/v1/sextoA/api',
+    nameCookie: 'token'
+}
 
 /*
  * For easier debugging in development mode, you can import the following file
