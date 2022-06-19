@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IClient } from '../../models/client';
-import { environment } from '../../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
-import { IUser } from '../../models/login';
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { IClient } from '../../models/client'
+import { environment } from '../../environments/environment'
+import { CookieService } from 'ngx-cookie'
+import { IUser } from '../../models/login'
 
 @Injectable(
     {
@@ -12,23 +12,24 @@ import { IUser } from '../../models/login';
     })
 
 export class clientService {
-    private url           = environment.API_URL;
-    private clientSubject = new BehaviorSubject<string | null>(null);
+    private url           = environment.API_URL
+    private nameCoookie   = environment.nameCookie
+    private clientSubject = new BehaviorSubject<string | null>(null)
 
     constructor(
         private http: HttpClient,
         private cookies: CookieService
     ) {
-        this.clientSubject.next(this.getToken());
+        this.clientSubject.next(this.getToken()!)
     }
 
     get client$(): Observable<string | null> {
-        return this.clientSubject.asObservable();
+        return this.clientSubject.asObservable()
     }
 
     login(client: IUser): Observable<any> {
-        this.setClient();
-        return this.http.get(
+        this.setClient()
+        return this.http.get<IUser>(
             `${ this.url }/cliente/login`,
             {
                 params: {
@@ -40,31 +41,35 @@ export class clientService {
     }
 
     register(client: IClient): Observable<any> {
-        return this.http.post(`${ this.url }/cliente`, client);
+        return this.http.post<IClient>(`${ this.url }/cliente`, client)
     }
 
-    getClient(id: string): Observable<any> {
-        return this.http.get(`${ this.url }/cliente/ver/${ id }`);
+    getClient(id: string | undefined): Observable<any> {
+        return this.http.get<IClient>(`${ this.url }/cliente/ver/${ id }`)
     }
 
     private setClient(): void {
-        this.clientSubject.next('token');
+        this.clientSubject.next(this.nameCoookie)
     }
 
     setToken(data: IClient | any): void {
-        this.cookies.set('token', data, 1);
+        this.cookies.put(
+            this.nameCoookie,
+            data,
+            {
+                expires: new Date(Date.now() + (24 * 60 * 60 * 1000
+                )),
+                path   : '/'
+            }
+        )
     }
 
-    getToken(): string {
-        return this.cookies.get('token');
+    getToken(): string | undefined {
+        return this.cookies.get(this.nameCoookie)
     }
 
     deleteToken(): void {
-        this.clientSubject.next(null);
-        return this.cookies.delete('token');
-    }
-
-    checkToken(): boolean {
-        return this.cookies.check('token');
+        this.clientSubject.next(null)
+        return this.cookies.remove(this.nameCoookie)
     }
 }

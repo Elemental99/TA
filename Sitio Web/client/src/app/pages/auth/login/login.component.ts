@@ -1,36 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { clientService } from '../../../services/clientService.service';
-import { Router } from '@angular/router';
-import { IUser } from '../../../../models/login';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { clientService } from '../../../services/clientService.service'
+import { IUser } from '../../../../models/login'
 
 @Component(
     {
         selector   : 'app-login',
         templateUrl: './login.component.html',
-        styleUrls  : ['./login.component.css']
-    })
+        styleUrls  : ['./login.component.css'],
+    },
+)
 export class LoginComponent implements OnInit {
-    public user: string | undefined;
-    public password: string | undefined;
+    public user: string | undefined
+
+    public password: string | undefined
 
     constructor(
         private readonly clientService: clientService,
         private readonly router: Router,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
     }
 
-    login() {
+    login(): void {
         const client: IUser = {
             user    : String(this.user),
-            password: String(this.password)
-        };
+            password: String(this.password),
+        }
         this.clientService.login(client).subscribe(data => {
-            this.clientService.setToken(data.datos._id);
-            this.router.navigateByUrl('/home').then();
-        }, error => {
-            console.log(error);
-        });
+            console.log(data)
+            this.clientService.setToken(data.datos._id)
+            this.router.navigateByUrl('/home').then()
+        }, (error) => {
+            console.error(error)
+        }, () => {
+            console.log('Login complete')
+        })
     }
 }
