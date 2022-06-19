@@ -20,7 +20,7 @@ export class clientService {
         private http: HttpClient,
         private cookies: CookieService
     ) {
-        this.clientSubject.next(String(this.getToken()))
+        this.clientSubject.next(this.getToken()!)
     }
 
     get client$(): Observable<string | null> {

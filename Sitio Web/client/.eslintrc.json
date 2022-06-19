@@ -29,7 +29,7 @@
             "single"
         ],
         "no-console": "off",
-        "@typescript-eslint/no-empty-function": [
+        "no-empty-function": [
             "error",
             {
                 "allow": [
@@ -38,9 +38,20 @@
                 ]
             }
         ],
+        "no-unsed-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "after-used"
+            }
+        ],
         "semi": [
             "error",
             "never"
+        ],
+        "link-break-style": [
+            "error",
+            "unix"
         ],
         "no-empty": "warn",
         "no-cond-assign": [
