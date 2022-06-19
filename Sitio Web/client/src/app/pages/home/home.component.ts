@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { clientService } from '../../services/clientService.service'
+import { ClientService } from '../../services/clientService.service'
 
 @Component(
     {
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
     public clientName: string | undefined
 
     constructor(
-        private readonly clientService: clientService,
+        private readonly clientService: ClientService,
     ) { }
 
     ngOnInit(): void {

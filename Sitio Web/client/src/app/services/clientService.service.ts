@@ -11,9 +11,9 @@ import { IUser } from '../../models/login'
         providedIn: 'root'
     })
 
-export class clientService {
+export class ClientService {
     private url           = environment.API_URL
-    private nameCoookie   = environment.nameCookie
+    private nameCookie    = environment.nameCookie
     private clientSubject = new BehaviorSubject<string | null>(null)
 
     constructor(
@@ -49,12 +49,12 @@ export class clientService {
     }
 
     private setClient(): void {
-        this.clientSubject.next(this.nameCoookie)
+        this.clientSubject.next(this.nameCookie)
     }
 
     setToken(data: IClient | any): void {
         this.cookies.put(
-            this.nameCoookie,
+            this.nameCookie,
             data,
             {
                 expires: new Date(Date.now() + (24 * 60 * 60 * 1000
@@ -65,11 +65,11 @@ export class clientService {
     }
 
     getToken(): string | undefined {
-        return this.cookies.get(this.nameCoookie)
+        return this.cookies.get(this.nameCookie)
     }
 
     deleteToken(): void {
         this.clientSubject.next(null)
-        return this.cookies.remove(this.nameCoookie)
+        return this.cookies.remove(this.nameCookie)
     }
 }

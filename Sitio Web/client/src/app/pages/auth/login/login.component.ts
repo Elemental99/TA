@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { clientService } from '../../../services/clientService.service'
+import { ClientService } from '../../../services/clientService.service'
 import { IUser } from '../../../../models/login'
 
 @Component(
@@ -12,11 +12,10 @@ import { IUser } from '../../../../models/login'
 )
 export class LoginComponent implements OnInit {
     public user: string | undefined
-
     public password: string | undefined
 
     constructor(
-        private readonly clientService: clientService,
+        private readonly clientService: ClientService,
         private readonly router: Router,
     ) { }
 

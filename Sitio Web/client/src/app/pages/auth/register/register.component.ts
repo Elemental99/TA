@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { IClient } from '../../../../models/client'
-import { clientService } from '../../../services/clientService.service'
+import { ClientService } from '../../../services/clientService.service'
 import { Router } from '@angular/router'
 
 @Component(
@@ -10,16 +10,16 @@ import { Router } from '@angular/router'
         styleUrls  : ['./register.component.css']
     })
 export class RegisterComponent implements OnInit {
-    public nombre_cliente: string | any
-    public cedula: string | any
-    public edad: number | any
-    public telefono: number | any
-    public facultad: string | any
+    public clientName: string | any
+    public identificationCard: string | any
+    public age: number | any
+    public phone: number | any
+    public faculty: string | any
     public user: string | any
     public password: string | any
 
     constructor(
-        private readonly clientService: clientService,
+        private readonly clientService: ClientService,
         private readonly router: Router
     ) { }
 
@@ -28,11 +28,11 @@ export class RegisterComponent implements OnInit {
 
     register(): void {
         const client: IClient = {
-            nombre_cliente: this.nombre_cliente,
-            cedula        : this.cedula,
-            edad          : this.edad,
-            telefono      : this.telefono,
-            facultad      : this.facultad,
+            nombre_cliente: this.clientName,
+            cedula        : this.identificationCard,
+            edad          : this.age,
+            telefono      : this.phone,
+            facultad      : this.faculty,
             user          : this.user,
             password      : this.password
         }

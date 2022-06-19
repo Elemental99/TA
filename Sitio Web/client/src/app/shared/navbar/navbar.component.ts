@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { clientService } from '../../services/clientService.service'
+import { ClientService } from '../../services/clientService.service'
 
 @Component(
     {
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
     public user$ = this.clientService.client$
 
     constructor(
-        private readonly clientService: clientService,
+        private readonly clientService: ClientService,
     ) { }
 
     ngOnInit(): void {
