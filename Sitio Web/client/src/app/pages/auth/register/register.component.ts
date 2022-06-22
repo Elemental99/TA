@@ -37,8 +37,7 @@ export class RegisterComponent implements OnInit {
             password      : this.password
         }
         this.clientService.register(client).subscribe(
-            data => {
-                this.clientService.setToken(data.token)
+            () => {
                 this.router.navigateByUrl('/login').then()
             },
             error => {
