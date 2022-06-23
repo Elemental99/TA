@@ -4,7 +4,7 @@
         <input
             type="text"
             #nameValid="ngModel"
-            [(ngModel)]="nombre_cliente"
+            [(ngModel)]="clientName"
             name="nombre_cliente"
             minlength="10"
             class="form-control"
@@ -30,7 +30,7 @@
         <input
             type="text"
             #cedulaValid="ngModel"
-            [(ngModel)]="cedula"
+            [(ngModel)]="identificationCard"
             name="cedula"
             minlength="10"
             maxlength="10"
@@ -57,7 +57,7 @@
         <input
             type="text"
             #ageValid="ngModel"
-            [(ngModel)]="edad"
+            [(ngModel)]="age"
             name="edad"
             minlength="2"
             class="form-control"
@@ -83,7 +83,7 @@
         <input
             type="tel"
             #phoneValid="ngModel"
-            [(ngModel)]="telefono"
+            [(ngModel)]="phone"
             name="telefono"
             maxlength="10"
             minlength="10"
@@ -110,7 +110,7 @@
         <input
             type="tel"
             #facultyValid="ngModel"
-            [(ngModel)]="facultad"
+            [(ngModel)]="faculty"
             name="facultad"
             minlength="4"
             class="form-control"
