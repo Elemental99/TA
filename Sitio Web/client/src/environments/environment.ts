@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    API_URL   : 'http://localhost:3000/v1/sextoA/api',
+    API_URL   : 'http://localhost:4000/v1/sextoA/api/bar',
     nameCookie: 'token'
 }
 

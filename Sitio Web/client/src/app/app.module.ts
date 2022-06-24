@@ -11,7 +11,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component'
 import {
     PageNotFoundComponent,
 } from './shared/page-not-found/page-not-found.component'
-import { CookieModule } from 'ngx-cookie'
+import { CookieModule } from 'ngx-cookie';
+import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
 
 @NgModule(
     {
@@ -22,6 +23,7 @@ import { CookieModule } from 'ngx-cookie'
             HomeComponent,
             NavbarComponent,
             PageNotFoundComponent,
+            IndexBarComponent,
         ],
         imports     : [
             BrowserModule,
