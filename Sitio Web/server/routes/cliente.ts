@@ -1,16 +1,19 @@
-import { Router } from 'express';
+import { Router } from 'express'
 import {
     crearCliente,
     loginCliente,
     obtenerClienteById,
     obtenerClientes,
-} from '../controllers/cliente';
+} from '../controllers/cliente'
+import { handleErrors } from '../middlewares/handleErrors'
 
-const router = Router();
+const router = Router()
 
-router.get('/login', loginCliente);
-router.get('/ver/:id', obtenerClienteById);
-router.get('/', obtenerClientes); // Obtener todos los clientes
-router.post('/', crearCliente); // Crear un nuevo cliente
+router.post('/login', loginCliente)
+router.get('/ver/:id', obtenerClienteById)
+router.get('/', obtenerClientes) // Obtener todos los clientes
+router.post('/', crearCliente) // Crear un nuevo cliente
 
-export default router;
+router.use(handleErrors)
+
+export default router

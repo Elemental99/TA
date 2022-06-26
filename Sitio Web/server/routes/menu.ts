@@ -1,12 +1,16 @@
-import { Router } from 'express';
-import { obtenerMenus, crearMenu } from '../controllers/menu';
+import { Router } from 'express'
+import { obtenerMenus } from '../controllers/menu'
+import { handleErrors } from '../middlewares/handleErrors'
+import { isAuthenticated } from '../helpers/authentic'
 
-const router = Router();
+const router = Router()
 
-router.get('/', obtenerMenus);
+router.get('/', isAuthenticated, obtenerMenus)
 // router.get('/:id', obtenerMenu);
-router.post('/', crearMenu);
+// router.post('/', crearMenu);
 // router.put('/:id', actualizarMenu);
 // router.delete('/:id', borrarMenu);
 
-export default router;
+router.use(handleErrors)
+
+export default router

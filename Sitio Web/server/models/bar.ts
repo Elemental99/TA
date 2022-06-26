@@ -1,12 +1,15 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose'
+import { IBar } from '../interfaces'
 
-const barSchema = new Schema({
+const barSchema: mongoose.Schema = new Schema<IBar>({
     nombre        : String,
     ubicacion     : String,
-    vende_desayuno: String,
-    vende_almuerzo: String,
+    vende_desayuno: Boolean,
+    vende_almuerzo: Boolean,
     horario       : String,
-    capacidad     : Number
-});
+    capacidad     : Number,
+})
 
-export default model('Bar', barSchema);
+const Bar: mongoose.Model<IBar> = model<IBar>('Bar', barSchema)
+
+export default Bar

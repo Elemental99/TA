@@ -1,46 +1,98 @@
-import { Response, Request } from 'express';
-import { Cliente } from '../models';
-import { createToken as jwt } from '../helpers/jwt';
+import { NextFunction, Request, Response } from 'express'
+import * as bcrypt from 'bcryptjs'
+import { Cliente } from '../models'
+import { createToken as jwt } from '../helpers/jwt'
+import { ICliente } from '../interfaces'
 
-export const obtenerClientes = async (req: Request, res: Response) => {
+const saltRounds = 10
+
+export const obtenerClientes = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
     // const { limite = 10, desde = 0 } = req.query;
+    const query = { estado: true }
     
-    const [client] = await Promise.all([Cliente.find()]);
-    if ( client ) return res.status(200).json({ client });
-    
-    return res.status(200).send('No hay clientes');
-};
+    try {
+        const [total, client]: [Number, ICliente[]] = await Promise.all([
+            Cliente.countDocuments(query),
+            Cliente.find(query),
+        ])
+        if ( client ) {
+            return res.status(201)
+            .json({
+                total,
+                client,
+            })
+        }
+        return res.status(400).send('No hay clientes')
+    } catch (error) {
+        next(error)
+    }
+}
 
-export const obtenerClienteById = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const cliente = await Cliente.findById(id);
-    if ( cliente ) return res.status(200).send({ cliente: cliente });
-    return res.status(200).send({
-        message: 'No hay cliente',
-    });
-};
+export const obtenerClienteById = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { id } = req.params
+    
+    try {
+        const cliente: ICliente | null = await Cliente.findById(id)
+        if ( cliente ) return res.status(201).send({ cliente: cliente })
+        return res.status(400).send({
+            message: 'No hay cliente',
+        })
+    } catch (error) {
+        next(error)
+    }
+    
+}
 
-export const crearCliente = async (req: Request, res: Response) => {
-    const { ...body } = req.body;
-    
-    // const clienteExiste = await Cliente.findOne({ user: body.user });
-    // if ( clienteExiste ) {
-    //     const { user } = clienteExiste;
-    //     res.status(200).json({
-    //         message: `El cliente con este usuario ya existe ${ user }`
-    //     });
-    // }
-    
-    const cliente = new Cliente(body);
-    await cliente.save();
-    res.status(200).send({
-        message: 'Usuario registrado',
-    });
-};
+export const crearCliente = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const
+        {
+            password,
+            ...body
+        } = req as unknown as ICliente
+    try {
+        const passwordHash = await bcrypt.hash(
+            String(password),
+            saltRounds,
+        )
+        const newClient    = {
+            password: passwordHash,
+            ...body,
+        }
+        
+        const clienteExiste = await Cliente.findOne({ user: body.user })
+        if ( clienteExiste ) {
+            const { user } = clienteExiste
+            res.status(400).json({
+                message: `El cliente con este usuario ya existe ${user}`,
+            })
+        }
+        
+        const cliente      = new Cliente(newClient)
+        const clienteNuevo = await cliente.save()
+        res.status(201).send({
+            clienteNuevo,
+            message: 'Usuario registrado',
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 
 // const actualizarCliente = async (req, res = response) => {
 // 	const { id } = req.params;
-// 	const { body } = req.body;
+// 	const { body } =  req.body;
 
 // 	const clienteActualizado = await Cliente.findByIdAndUpdate(id, body, {
 // 		new: true,
@@ -58,26 +110,40 @@ export const crearCliente = async (req: Request, res: Response) => {
 // 	res.json(clienteBorrado);
 // };
 
-export const loginCliente = async (req: Request, res: Response) => {
-    const body = req.query;
-    const clientelogeado = await Cliente.findOne({ user: body.user });
+export const loginCliente = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { body } = req
+    const { user } = body
     
-    if ( clientelogeado ) {
-        const { password, user } = clientelogeado;
-        if ( body.user === user && body.password === password ) {
-            res.status(200).send({
-                jwt    : jwt(clientelogeado),
-                message: 'Cliente logeado',
-                datos  : clientelogeado,
-            });
-        } else {
-            res.status(200).send({
-                message: `Cliente no encontrado`,
-            });
+    try {
+        const clientelogeado = await Cliente.findOne({ user })
+        
+        if ( !clientelogeado ) {
+            return res.status(400).send({
+                message: `El cliente con este nombre no existe ${body.user}`,
+            })
         }
-    } else {
-        res.status(200).send({
-            message: `El cliente con este nombre no existe ${ body.user }`,
-        });
+        const { password }     = clientelogeado
+        const passwordCorrecto = clientelogeado === null
+            ? false
+            : await bcrypt.compare(
+                String(body.password),
+                String(password),
+            )
+        if ( passwordCorrecto && clientelogeado ) {
+            return res.status(201).send({
+                jwt    : jwt(clientelogeado),
+                datos  : clientelogeado,
+                message: 'Cliente logeado',
+            })
+        }
+        res.status(400).send({
+            message: `Cliente no encontrado`,
+        })
+    } catch (error) {
+        next(error)
     }
-};
+}

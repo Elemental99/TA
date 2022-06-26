@@ -1,12 +1,16 @@
-import { Router } from 'express';
-import { obtenerBares, crearBar, borrarBar, actualizarBar, obtenerBar } from '../controllers/bar';
+import { Router } from 'express'
+import { crearBar, obtenerBarById, obtenerBares } from '../controllers/bar'
+import { handleErrors } from '../middlewares/handleErrors'
+import { isAuthenticated } from '../helpers/authentic'
 
-const router = Router();
+const router = Router()
 
-router.get('/', obtenerBares);
-router.get('/:id', obtenerBar);
-router.post('/registrar', crearBar);
-router.put('/editar/:id', actualizarBar);
-router.delete('/eliminar/:id', borrarBar);
+router.get('/', isAuthenticated, obtenerBares)
+router.get('/:id', isAuthenticated, obtenerBarById)
+router.post('/', isAuthenticated, crearBar)
+// router.put('/:id', actualizarBar);
+// router.delete('/:id', borrarBar);
 
-export default router;
+router.use(handleErrors)
+
+export default router

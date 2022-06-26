@@ -1,8 +1,8 @@
-export interface IBar{
-    nombre        : String | undefined;
-    ubicacion     : String | undefined;
-    vende_desayuno: String | undefined;
-    vende_almuerzo: String | undefined;
-    horario       : String | undefined;
-    capacidad     : Number | undefined
+export interface IBar {
+    nombre: String
+    ubicacion: String
+    vende_desayuno: Boolean
+    vende_almuerzo: Boolean
+    horario: String
+    capacidad: Number
 }

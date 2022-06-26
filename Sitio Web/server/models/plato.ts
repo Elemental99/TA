@@ -1,7 +1,10 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose'
+import { IPlato } from '../interfaces'
 
-const PlatoSchema = new Schema({
-    nombre_plato: String
-});
+const PlatoSchema: mongoose.Schema = new Schema<IPlato>({
+    nombre_plato: String,
+})
 
-export default model('Plato', PlatoSchema);
+const Plato: mongoose.Model<IPlato> = model<IPlato>('Plato', PlatoSchema)
+
+export default Plato

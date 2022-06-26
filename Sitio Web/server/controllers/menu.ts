@@ -1,19 +1,32 @@
-import { Request, Response } from 'express';
-import { Menu } from '../models';
+import { NextFunction, Request, Response } from 'express'
+import { Menu } from '../models'
+import { IMenu } from '../interfaces'
 
-export const obtenerMenus = async (req: Request, res: Response) => {
-	const query = { estado: true };
-	const [menus] = await Promise.all([Menu.find(query)]);
-	if (menus) {
-		res.status(200).send({
-			menus,
-		});
-	} else {
-		res.status(404).send({
-			message: 'Menu not found',
-		});
-	}
-};
+export const obtenerMenus = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const query = { estado: true }
+    try {
+        const [total, menus]: [Number, IMenu[]] = await Promise.all([
+            Menu.countDocuments(query),
+            Menu.find(query),
+        ])
+        if ( menus ) {
+            return res.status(201).send({
+                total,
+                menus,
+            })
+        } else {
+            return res.status(400).send({
+                message: 'Menu not found',
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+}
 
 // const obtenerMenu = async (req, res = response) => {
 // 	const { id } = req.params;
@@ -21,18 +34,18 @@ export const obtenerMenus = async (req: Request, res: Response) => {
 // 	res.json(menu);
 // };
 
-export const crearMenu = async (req: Request, res: Response) => {
-	const { ...body } = req.body;
-	// const menuExiste = await Menu.findOne({ nombre: body.nombre });
-	// if (menuExiste) {
-	// 	res.status(400).json({
-	// 		message: `El menu que desea crear ya existe ${menuExiste.nombre}`,
-	// 	});
-	// }
-	const menu = new Menu(body);
-	const menuNuevo = await menu.save();
-	res.status(201).json(menuNuevo);
-};
+// export const crearMenu = async(req: Request, res: Response) => {
+//     const { ...body } = req.body as IMenu
+//     const menuExiste  = await Menu.findOne({ nombre: body.nombre })
+//     if ( menuExiste ) {
+//         return res.status(400).json({
+//             message: `El menu que desea crear ya existe ${menuExiste.nombre}`,
+//         })
+//     }
+//     const menu      = new Menu(body)
+//     const menuNuevo = await menu.save()
+//     res.status(201).json(menuNuevo)
+// }
 
 // const actualizarMenu = async (req, res) => {
 // 	const { id } = req.params;
@@ -50,4 +63,3 @@ export const crearMenu = async (req: Request, res: Response) => {
 // 	);
 // 	res.json(menuBorrado);
 // };
-

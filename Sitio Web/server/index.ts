@@ -1,5 +1,8 @@
-import { Server } from './server';
+import { config } from 'dotenv'
+import { Server } from './server'
 
-const server = new Server(); // create a new server
+config()
 
-server.listen();
+const server = new Server()
+
+server.listen()

@@ -1,13 +1,19 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose'
+import { ICliente } from '../interfaces'
 
-const ClienteSchema = new Schema({
-	nombre_cliente: String,
-	cedula: String,
-	edad: Number,
-	telefono: Number,
-	facultad: String,
-	user: String,
-	password: String,
-});
+const ClienteSchema: mongoose.Schema = new Schema<ICliente>({
+    nombre_cliente: String,
+    cedula        : String,
+    edad          : Number,
+    telefono      : Number,
+    facultad      : String,
+    user          : String,
+    password      : String,
+})
 
-export default model('Cliente', ClienteSchema);
+const Cliente: mongoose.Model<ICliente> = model<ICliente>(
+    'Cliente',
+    ClienteSchema,
+)
+
+export default Cliente

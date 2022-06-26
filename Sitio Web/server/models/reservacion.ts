@@ -1,11 +1,23 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose'
+import { IReservacion } from '../interfaces'
 
-const ReservacionSchema = new Schema({
-    idcliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente' },
-    idmenu: { type: mongoose.Types.ObjectId, ref: 'Menu' },
+const ReservacionSchema: mongoose.Schema = new Schema<IReservacion>({
+    idcliente: {
+        type: Schema.Types.ObjectId,
+        ref : 'Cliente',
+    },
+    idmenu: {
+        type: Schema.Types.ObjectId,
+        ref : 'Menu',
+    },
     fecha: Date,
     hora: String,
-    descripcion: String
-});
+    descripcion: String,
+})
 
-export default model('Reservacion', ReservacionSchema);
+const Reservacion: mongoose.Model<IReservacion> = model<IReservacion>(
+    'Reservacion',
+    ReservacionSchema,
+)
+
+export default Reservacion

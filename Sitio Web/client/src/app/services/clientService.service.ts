@@ -12,8 +12,9 @@ import { IUser } from '../../models/login'
     })
 
 export class ClientService {
-    private url           = environment.API_URL
-    private nameCookie    = environment.nameCookie
+    private url        = environment.API_URL
+    private nameCookie = environment.nameCookie
+
     private clientSubject = new BehaviorSubject<string | null>(null)
 
     constructor(
@@ -29,13 +30,12 @@ export class ClientService {
 
     login(client: IUser): Observable<any> {
         this.setClient()
-        return this.http.get<IUser>(
+        const { user, password } = client
+        return this.http.post<IUser>(
             `${ this.url }/cliente/login`,
             {
-                params: {
-                    user    : client.user,
-                    password: client.password
-                }
+                user,
+                password
             }
         )
     }
