@@ -14,9 +14,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ng-container
-                *ngIf="!(user$ | async); else logoutTemplate">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ng-container
+                    *ngIf="!(user$ | async); else logoutTemplate">
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/login']">Login</a>
                     </li>
@@ -24,9 +24,13 @@
                         <a class="nav-link" [routerLink]="['/register']">Register
                         </a>
                     </li>
-                </ul>
-            </ng-container>
-
+                </ng-container>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/bar']">Bares
+                    </a>
+                </li>
+            </ul>
+            
             <ng-template #logoutTemplate>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

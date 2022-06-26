@@ -4,23 +4,29 @@
             <div class="card">
                 <div class="card-body text-center">
                     <h4 class="titulo">LISTA DE BARES</h4>
-                    <!-- <div class="col-lg-4">
-                      <h5 class="float-start mb-3">Buscar Bar</h5>
-                      <form #buscarForm="ngForm" (ngSubmit)="buscar(buscarForm)">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Ingrese el bar a buscar" #filtro="ngModel" name="filtro" [(ngModel)]="filtrotext" >
-                          <div class="input-group-append ms-2">
-                              <button type="submit" class="btn btn-success">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                              </button>
-                          </div>  
-                        </div>
-                      </form>
-                    </div> -->
-                    <button class="btn btn-success float-end mb-3">NUEVO BAR</button> 
+                    <!--                    <div class="col-lg-4">-->
+                    <!--                        <h5 class="float-start mb-3">Buscar Bar</h5>-->
+                    <!--                        <form #buscarForm="ngForm"-->
+                    <!--                              (ngSubmit)="buscar(buscarForm)">-->
+                    <!--                            <div class="input-group">-->
+                    <!--                                <input type="text" class="form-control"-->
+                    <!--                                       placeholder="Ingrese el bar a buscar"-->
+                    <!--                                       #filtro="ngModel" name="filtro"-->
+                    <!--                                       [(ngModel)]="filtrotext">-->
+                    <!--                                <div class="input-group-append ms-2">-->
+                    <!--                                    <button type="submit"-->
+                    <!--                                            class="btn btn-success">-->
+                    <!--                                        <i class="fa-solid fa-magnifying-glass"></i>-->
+                    <!--                                    </button>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </form>-->
+                    <!--                    </div>-->
+                    <button class="btn btn-success float-end mb-3">NUEVO BAR
+                    </button>
                     <table class="table table-striped mt-3">
                         <thead>
-                          <tr>
+                        <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Ubicación</th>
                             <th scope="col">Desayuno</th>
@@ -29,10 +35,10 @@
                             <th scope="col">Capacidad</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
-                          </tr>
+                        </tr>
                         </thead>
                         <tbody *ngFor="let item of bares">
-                          <tr>
+                        <tr>
                             <td>{{item.nombre}}</td>
                             <td>{{item.ubicacion}}</td>
                             <td>{{item.vende_desayuno}}</td>
@@ -40,19 +46,21 @@
                             <td>{{item.horario}}</td>
                             <td>{{item.capacidad}}</td>
                             <td>
-                              <i class="fas fa-edit text-primary"></i>   
+                                <i class="fas fa-edit text-primary"></i>
                             </td>
                             <td>
-                              <i class="fas fa-trash text-danger"></i>
+                                <i class="fas fa-trash text-danger"></i>
                             </td>
-                          </tr>
+                        </tr>
                         </tbody>
-                      </table>
-                      
-                      <h5 class="text-center" style="text-align: start; margin-top: 10px;" *ngIf="bares.length === 0">No hay bares para mostrar</h5>
+                    </table>
+
+                    <h5 class="text-center"
+                        style="text-align: start; margin-top: 10px;"
+                        *ngIf="bares.length === 0">No hay bares para
+                        mostrar</h5>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

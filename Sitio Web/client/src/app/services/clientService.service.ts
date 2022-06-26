@@ -20,7 +20,7 @@ export class ClientService {
         private http: HttpClient,
         private cookies: CookieService
     ) {
-        this.clientSubject.next(String(this.getToken()))
+        this.clientSubject.next(this.getToken()!)
     }
 
     get client$(): Observable<string | null> {
@@ -41,11 +41,16 @@ export class ClientService {
     }
 
     register(client: IClient): Observable<any> {
-        return this.http.post<IClient>(`${ this.url }/cliente`, client)
+        return this.http.post<IClient>(
+            `${ this.url }/cliente`,
+            client,
+        )
     }
 
     getClient(id: string | undefined): Observable<any> {
-        return this.http.get<IClient>(`${ this.url }/cliente/ver/${ id }`)
+        return this.http.get<IClient>(
+            `${ this.url }/cliente/ver/${ id }`,
+        )
     }
 
     private setClient(): void {
