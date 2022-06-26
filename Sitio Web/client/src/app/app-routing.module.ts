@@ -8,11 +8,13 @@ import {
 } from './shared/page-not-found/page-not-found.component'
 import { AuthGuard } from './pages/auth/guards/auth.guard'
 import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
+import { CrearReservationsComponent } from './pages/reservations/crear-reservations/crear-reservations.component'
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'home', component: HomeComponent, pathMatch: 'full' },
     { path: 'bar', component: IndexBarComponent, pathMatch: 'full' },
+    { path: 'reservacion', component: CrearReservationsComponent, pathMatch: 'full' },
     {
         path       : 'login',
         component  : LoginComponent,

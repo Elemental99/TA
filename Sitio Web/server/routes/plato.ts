@@ -5,9 +5,9 @@ import { isAuthenticated } from '../helpers/authentic'
 
 const router = Router()
 
-router.get('/', isAuthenticated, obtenerPlatos)
+router.get('/', obtenerPlatos)
 // router.get('/:id', obtenerPlato);
-router.post('/', isAuthenticated, crearPlato)
+router.post('/', crearPlato)
 // router.put('/:id', actualizarPlato);
 // router.delete('/:id', borrarPlato);
 

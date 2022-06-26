@@ -18,7 +18,7 @@ export class Server {
     constructor() {
         this.app    = Router()
         this.router = Router()
-        this.port   = Number(process.env.PORT) || 4000
+        this.port   = Number(process.env.PORT) || 4100
         this.paths  = {
             bar        : '/api/bar',
             cliente    : '/api/cliente',

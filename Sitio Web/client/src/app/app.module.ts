@@ -12,7 +12,8 @@ import {
     PageNotFoundComponent,
 } from './shared/page-not-found/page-not-found.component'
 import { CookieModule } from 'ngx-cookie';
-import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
+import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component';
+import { CrearReservationsComponent } from './pages/reservations/crear-reservations/crear-reservations.component'
 
 @NgModule(
     {
@@ -24,6 +25,7 @@ import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
             NavbarComponent,
             PageNotFoundComponent,
             IndexBarComponent,
+            CrearReservationsComponent,
         ],
         imports     : [
             BrowserModule,

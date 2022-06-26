@@ -60,7 +60,7 @@ export const crearCliente = async(
         {
             password,
             ...body
-        } = req as unknown as ICliente
+        } = req.body as ICliente
     try {
         const passwordHash = await bcrypt.hash(
             String(password),

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
 	actualizarReservacion,
 	borrarReservacion,
+	obtenerReservacionbyId,
 	crearReservacion,
 	obtenerReservacion,
 	obtenerReservaciones,
@@ -11,12 +12,12 @@ import { isAuthenticated } from '../helpers/authentic'
 
 const router = Router()
 
-router.get('/', isAuthenticated, obtenerReservaciones)
-router.get('/:id', isAuthenticated, obtenerReservacion)
-// router.get('/hola/:id', obtenerReservacionbyId);
-router.post('/', isAuthenticated, crearReservacion)
-router.put('/:id', isAuthenticated, actualizarReservacion)
-router.delete('/:id', isAuthenticated, borrarReservacion)
+router.get('/', obtenerReservaciones)
+router.get('/:id', obtenerReservacion)
+router.get('/obtenerReservacion/:id', obtenerReservacionbyId);
+router.post('/', crearReservacion)
+router.put('/:id', actualizarReservacion)
+router.delete('/:id', borrarReservacion)
 
 router.use(handleErrors)
 

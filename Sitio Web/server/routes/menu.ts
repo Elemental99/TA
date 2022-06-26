@@ -5,7 +5,7 @@ import { isAuthenticated } from '../helpers/authentic'
 
 const router = Router()
 
-router.get('/', isAuthenticated, obtenerMenus)
+router.get('/', obtenerMenus)
 // router.get('/:id', obtenerMenu);
 // router.post('/', crearMenu);
 // router.put('/:id', actualizarMenu);

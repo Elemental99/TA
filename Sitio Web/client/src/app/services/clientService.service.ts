@@ -30,6 +30,7 @@ export class ClientService {
 
     login(client: IUser): Observable<any> {
         this.setClient()
+        console.log (client)
         const { user, password } = client
         return this.http.post<IUser>(
             `${ this.url }/cliente/login`,

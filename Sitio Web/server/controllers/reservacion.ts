@@ -51,19 +51,28 @@ export const obtenerReservacion = async(
     }
 }
 
-// const obtenerReservacionbyId = async (req, res = response) => {
-// 	const { id } = req.params;
-// 	const reservacion = await Reservacion.findById(id);
-// 	if (reservacion) {
-// 		res.status(200).send({
-// 			reservacion,
-// 		});
-// 	} else {
-// 		res.status(200).send({
-// 			message: 'No hay reservaciones',
-// 		});
-// 	}
-// };
+export const obtenerReservacionbyId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+    ) => {
+	const { id } = req.params;
+    try {
+        const reservacion = await Reservacion.findById(id);
+        if (reservacion) {
+            res.status(200).send({
+                reservacion,
+            });
+        } else {
+            res.status(200).send({
+                message: 'No hay reservaciones',
+            });
+	    }    
+    } catch (error) {
+        next(error)    
+    }
+	
+};
 
 export const crearReservacion = async(
     req: Request,
