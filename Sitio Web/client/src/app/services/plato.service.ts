@@ -4,22 +4,21 @@ import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PlatoService {
-    public ruta
+    private url: string = environment.API_URL
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
     ) {
-        this.ruta = environment.API_URL
     }
 
     consultar_platos(): Observable<any> {
         const headers = new HttpHeaders().set(
             'Content-Type',
-            'application/json'
+            'application/json',
         )
-        return this.http.get(this.ruta + '/plato', { headers: headers })
+        return this.http.get(this.url + '/plato', { headers })
     }
 }

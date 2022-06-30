@@ -1,51 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-// import { BarService } from 'src/app/services/bar.service'
-// import { ClientService } from 'src/app/services/clientService.service'
-// import { PlatoService } from 'src/app/services/plato.service'
+import { Component, OnInit } from '@angular/core'
 import { ReservationService } from 'src/app/services/reservation.service'
-import { IReservacion } from 'src/models/reservation'
+import { ClientService } from 'src/app/services/clientService.service'
 import { IClient } from '../../../../models/client'
-import { IBar } from '../../../../models/bar'
-import { IPlato } from '../../../../models/plato'
-import { ClientService } from 'src/app/services/clientService.service';
+import { IReservacion } from '../../../../models/reservation'
 
 @Component({
-  selector: 'app-consultar-reservations',
-  templateUrl: './consultar-reservations.component.html',
-  styleUrls: ['./consultar-reservations.component.css']
+    selector: 'app-consultar-reservations',
+    templateUrl: './consultar-reservations.component.html',
+    styleUrls: ['./consultar-reservations.component.css'],
 })
 export class ConsultarReservationsComponent implements OnInit {
+    public reservacion: IReservacion[] | any = []
+    public cliente: IClient[] | any = []
+    private readonly token: string | any
 
-  public reservacion: any
-  public cliente: any
-  private readonly token: string | any
+    constructor(
+        private reservationServices: ReservationService,
+        private readonly clientServices: ClientService,
+    ) {
+        this.token = this.clientServices.getToken()
+    }
 
-  constructor(
-    private reservationServices: ReservationService,
-    private readonly clientServices: ClientService
-) {
-  this.token = this.clientServices.getToken()
+    ngOnInit(): void {
+        this.getClient()
+        this.consultar_reservacion()
+    }
 
-}
+    getClient(): void {
+        this.clientServices.getClient(this.token).subscribe(
+            (response: any) => {
+                this.cliente = response.cliente
+            },
+        )
+    }
 
-ngOnInit(): void {
-  this.consultar_reservacion()
-}
-
-
-
-consultar_reservacion(): void {
-  this.reservationServices.consultar_reservacion(this.token).subscribe(
-      response => {
-        this.reservacion = response
-        console.log(response)
-      },
-      error => {  
-          console.error(error)
-
-      }
-  )
-}
-
-
+    consultar_reservacion(): void {
+        this.reservationServices.consultar_reservacion(this.token).subscribe(
+            response => {
+                this.reservacion = response.reservacion
+            },
+            error => {
+                console.error(error)
+            },
+        )
+    }
 }

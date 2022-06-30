@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core'
 import { environment } from 'src/environments/environment'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
+import { IBar } from '../../models/bar'
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class BarService {
-    public ruta
+    private url: string = environment.API_URL
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
     ) {
-        this.ruta = environment.API_URL
     }
 
     consultar_bares(): Observable<any> {
-        const headers = new HttpHeaders().set(
-            'Content-Type',
-            'application/json'
-        )
-        return this.http.get(this.ruta + '/bar', { headers: headers })
+        return this.http.get<IBar>(`${this.url}/bar`)
     }
-
 }

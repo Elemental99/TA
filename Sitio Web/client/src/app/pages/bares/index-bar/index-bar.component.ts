@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core'
 import { BarService } from 'src/app/services/bar.service'
+import { IBar } from '../../../../models/bar'
 
 @Component({
-    selector   : 'app-index-bar',
+    selector: 'app-index-bar',
     templateUrl: './index-bar.component.html',
-    styleUrls  : ['./index-bar.component.css']
+    styleUrls: ['./index-bar.component.css'],
 })
 export class IndexBarComponent implements OnInit {
-    public bares: any
+    public bares: IBar[] | any = []
 
     // public filtrotext: any;
 
     constructor(
-        private barService: BarService
+        private barService: BarService,
     ) { }
 
     ngOnInit(): void {
@@ -34,8 +35,7 @@ export class IndexBarComponent implements OnInit {
             },
             error => {
                 console.error(error)
-            }
+            },
         )
     }
-
 }

@@ -5,9 +5,9 @@ import { IUser } from '../../../../models/login'
 
 @Component(
     {
-        selector   : 'app-login',
+        selector: 'app-login',
         templateUrl: './login.component.html',
-        styleUrls  : ['./login.component.css'],
+        styleUrls: ['./login.component.css'],
     },
 )
 export class LoginComponent implements OnInit {
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
     login(): void {
         const client: IUser = {
-            user    : String(this.user),
+            user: String(this.user),
             password: String(this.password),
         }
         this.clientService.login(client).subscribe(data => {

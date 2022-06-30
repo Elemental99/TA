@@ -8,18 +8,17 @@ import { IUser } from '../../models/login'
 
 @Injectable(
     {
-        providedIn: 'root'
+        providedIn: 'root',
     })
 
 export class ClientService {
-    private url        = environment.API_URL
+    private url: string = environment.API_URL
     private nameCookie = environment.nameCookie
-
     private clientSubject = new BehaviorSubject<string | null>(null)
 
     constructor(
         private http: HttpClient,
-        private cookies: CookieService
+        private cookies: CookieService,
     ) {
         this.clientSubject.next(this.getToken()!)
     }
@@ -30,27 +29,27 @@ export class ClientService {
 
     login(client: IUser): Observable<any> {
         this.setClient()
-        console.log (client)
+        console.log(client)
         const { user, password } = client
         return this.http.post<IUser>(
-            `${ this.url }/cliente/login`,
+            `${this.url}/cliente/login`,
             {
                 user,
-                password
-            }
+                password,
+            },
         )
     }
 
     register(client: IClient): Observable<any> {
         return this.http.post<IClient>(
-            `${ this.url }/cliente`,
+            `${this.url}/cliente`,
             client,
         )
     }
 
     getClient(id: string | undefined): Observable<any> {
         return this.http.get<IClient>(
-            `${ this.url }/cliente/ver/${ id }`,
+            `${this.url}/cliente/ver/${id}`,
         )
     }
 
@@ -65,8 +64,8 @@ export class ClientService {
             {
                 expires: new Date(Date.now() + (24 * 60 * 60 * 1000
                 )),
-                path   : '/'
-            }
+                path: '/',
+            },
         )
     }
 
