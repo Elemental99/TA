@@ -13,7 +13,8 @@ import {
 } from './shared/page-not-found/page-not-found.component'
 import { CookieModule } from 'ngx-cookie';
 import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component';
-import { CrearReservationsComponent } from './pages/reservations/crear-reservations/crear-reservations.component'
+import { CrearReservationsComponent } from './pages/reservations/crear-reservations/crear-reservations.component';
+import { ConsultarReservationsComponent } from './pages/reservations/consultar-reservations/consultar-reservations.component'
 
 @NgModule(
     {
@@ -26,6 +27,7 @@ import { CrearReservationsComponent } from './pages/reservations/crear-reservati
             PageNotFoundComponent,
             IndexBarComponent,
             CrearReservationsComponent,
+            ConsultarReservationsComponent,
         ],
         imports     : [
             BrowserModule,
