@@ -27,4 +27,16 @@ export class ReservationService {
             `${this.url}/reservacion/${id}`,
         )
     }
+
+    eliminar_reservacion(id: string): Observable<any>{
+        return this.http.delete<IReservacion>(
+            `${this.url}/reservacion/${id}`,
+        )
+    }
+    modificar_reservacion(data: any): Observable<any> {
+        return this.http.put<IReservacion>(
+            `${this.url}/reservacion`,data
+        )
+    }
+
 }

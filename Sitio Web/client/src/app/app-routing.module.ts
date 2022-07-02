@@ -30,6 +30,11 @@ const routes: Routes = [
         pathMatch: 'full',
     },
     {
+        path: 'modificar-reservacion/:id', 
+        component: CrearReservationsComponent,
+        pathMatch: 'full',
+    },
+    {
         path: 'login',
         component: LoginComponent,
         pathMatch: 'full',

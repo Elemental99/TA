@@ -31,10 +31,10 @@
                             <td>{{item.hora}}</td>
                             <td>{{item.descripcion}}</td>
                             <td>
-                                <i class="fas fa-edit text-primary"></i>
+                                <i [routerLink]="['/modificar-reservacion',reservacion._id]" class="fas fa-edit text-primary"></i>
                             </td>
                             <td>
-                                <i class="fas fa-trash text-danger"></i>
+                                <i (click)="eliminarReserva(reservacion._id)" class="fas fa-trash text-danger"></i>
                             </td>
                         </tr>
                         </tbody>

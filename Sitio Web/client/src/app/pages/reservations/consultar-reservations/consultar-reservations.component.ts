@@ -44,4 +44,15 @@ export class ConsultarReservationsComponent implements OnInit {
             },
         )
     }
+
+    eliminarReserva(id: any){
+        this.reservationServices.eliminar_reservacion(id).subscribe(
+            response => {
+                this.reservacion = response.reservacion
+            },
+            error => {
+                console.error(error)
+            },
+        )
+    }
 }
