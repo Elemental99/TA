@@ -1,12 +1,16 @@
 import { Router } from 'express'
-import { obtenerMenus } from '../controllers/menu'
+import {
+    obtenerMenu,
+    obtenerMenuByBar,
+    obtenerMenus,
+} from '../controllers/menu'
 import { handleErrors } from '../middlewares/handleErrors'
-import { isAuthenticated } from '../helpers/authentic'
 
 const router = Router()
 
 router.get('/', obtenerMenus)
-// router.get('/:id', obtenerMenu);
+router.get('/obtenerMenu/:id', obtenerMenu)
+router.get('/obtenerMenuByBar/:id', obtenerMenuByBar)
 // router.post('/', crearMenu);
 // router.put('/:id', actualizarMenu);
 // router.delete('/:id', borrarMenu);

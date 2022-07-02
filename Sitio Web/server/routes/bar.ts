@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { crearBar, obtenerBarById, obtenerBares } from '../controllers/bar'
 import { handleErrors } from '../middlewares/handleErrors'
-import { isAuthenticated } from '../helpers/authentic'
 
 const router = Router()
 

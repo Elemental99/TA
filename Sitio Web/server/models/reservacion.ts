@@ -4,11 +4,11 @@ import { IReservacion } from '../interfaces'
 const ReservacionSchema: mongoose.Schema = new Schema<IReservacion>({
     idcliente: {
         type: Schema.Types.ObjectId,
-        ref : 'Cliente',
+        ref: 'Cliente',
     },
     idmenu: {
         type: Schema.Types.ObjectId,
-        ref : 'Menu',
+        ref: 'Menu',
     },
     fecha: Date,
     hora: String,

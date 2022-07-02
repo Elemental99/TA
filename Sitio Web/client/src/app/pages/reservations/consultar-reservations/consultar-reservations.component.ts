@@ -45,10 +45,10 @@ export class ConsultarReservationsComponent implements OnInit {
         )
     }
 
-    eliminarReserva(id: any){
+    eliminarReserva(id: string): void {
         this.reservationServices.eliminar_reservacion(id).subscribe(
-            response => {
-                this.reservacion = response.reservacion
+            () => {
+                this.consultar_reservacion()
             },
             error => {
                 console.error(error)

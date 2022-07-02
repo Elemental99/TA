@@ -20,10 +20,13 @@
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora</th>
                             <th scope="col">Descripcion</th>
+                            <th scope="col" colspan="2">Acciones</th>
 
                         </tr>
                         </thead>
-                        <tbody *ngFor="let item of reservacion">
+                        <tbody
+                            *ngFor="let item of reservacion"
+                        >
                         <tr>
                             <td>{{item._id}}</td>
                             <td>{{cliente.nombre_cliente}}</td>
@@ -31,25 +34,27 @@
                             <td>{{item.hora}}</td>
                             <td>{{item.descripcion}}</td>
                             <td>
-                                <i [routerLink]="['/modificar-reservacion',reservacion._id]" class="fas fa-edit text-primary"></i>
+                                <i
+                                    [routerLink]="['/modificar-reservacion',item._id]"
+                                    class="fas fa-edit text-primary"></i>
                             </td>
                             <td>
-                                <i (click)="eliminarReserva(reservacion._id)" class="fas fa-trash text-danger"></i>
+                                <i
+                                    (click)="eliminarReserva(item._id)"
+                                    class="fas fa-trash text-danger"></i>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <h5 class="text-center"
+                    <h5
+                        class="text-center"
                         style="text-align: start; margin-top: 10px;"
-                        *ngIf="reservacion.length === 0">No hay Reservaciones
-                        para
-                        mostrar
+                        *ngIf="reservacion.length === 0">
+                        No hay Reservaciones para mostrar
                     </h5>
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>

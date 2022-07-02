@@ -10,10 +10,12 @@ export const obtenerBares = async(
     const query = { estado: true }
     try {
         const [total, bares]: [Number, IBar[]] = await Promise.all([
-            await Bar.countDocuments(query),
-            await Bar.find(query),
+            await Bar.countDocuments(
+                query),
+            await Bar.find(
+                query),
         ])
-        if ( bares ) {
+        if (bares) {
             res.status(201).send({
                 total,
                 bares,
@@ -36,8 +38,8 @@ export const obtenerBarById = async(
     const { id } = req.params
     try {
         const bar: IBar | null = await Bar.findById(id)
-        if ( bar ) {
-            res.json(bar)
+        if (bar) {
+            res.json({ bar })
         } else {
             res.status(400).send({
                 message: 'Bar not found',
@@ -56,13 +58,13 @@ export const crearBar = async(
     const { ...body } = req.body as IBar
     try {
         const barExiste = await Bar.findOne({ nombre: body.nombre })
-        if ( barExiste ) {
+        if (barExiste) {
             const { nombre } = barExiste
             res.status(400).json({
                 message: `El bar con ese nombre ya existe ${nombre}`,
             })
         }
-        const bar      = new Bar(body)
+        const bar = new Bar(body)
         const barNuevo = await bar.save()
         res.status(201).json({ bar: barNuevo })
     } catch (error) {

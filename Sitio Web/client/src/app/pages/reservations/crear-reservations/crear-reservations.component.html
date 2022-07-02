@@ -14,7 +14,6 @@
                 <div class="card-body bg-dark" style="color: white;">
                     <form
                         #reservationForm="ngForm"
-                        (ngSubmit)="crearReservacion()"
                     >
                         <div class="row">
                             <div class="col-lg-4 form-group">
@@ -31,9 +30,12 @@
                             <div class="col-lg-4 form-group">
                                 <label><b>Bar</b></label>
                                 <p>Seleccione un bar</p>
-                                <select class="form-control form-select mt-2"
-                                        required>
-                                    <option value="" disabled selected>
+                                <select
+                                    class="form-control form-select mt-2"
+                                    required
+                                    (change)="selectBar($event)"
+                                >
+                                    <option disabled selected>
                                         SELECCIONAR
                                     </option>
                                     <option
@@ -46,8 +48,11 @@
                             <div class="col-lg-4 form-group">
                                 <label><b>Menú</b></label>
                                 <p>Seleccione un menú</p>
-                                <select class="form-control form-select mt-2"
-                                        required>
+                                <select
+                                    class="form-control form-select mt-2"
+                                    required
+                                    (change)="selectMenu($event)"
+                                >
                                     <option value="" disabled selected>
                                         SELECCIONAR
                                     </option>
@@ -96,9 +101,22 @@
                             class="col-lg-3 form-group mt-2"
                             style="margin-left: 42.5%;"
                         >
-                            <button type="submit" class="btn btn-success mt-4">
-                                Registrar reservación
+                            <button
+                                type="submit"
+                                *ngIf="!id else editarTemplate"
+                                class="btn btn-success mt-4"
+                                (click)="crearReservacion()"
+                            >
+                                Registrar Reservación
                             </button>
+                            <ng-template #editarTemplate>
+                                <button
+                                    type="submit"
+                                    class="btn btn-success mt-4"
+                                    (click)="modificarReservacion()">
+                                    Actualizar Reservación
+                                </button>
+                            </ng-template>
                         </div>
                     </form>
                 </div>

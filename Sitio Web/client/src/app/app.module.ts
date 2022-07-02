@@ -11,10 +11,14 @@ import { NavbarComponent } from './shared/navbar/navbar.component'
 import {
     PageNotFoundComponent,
 } from './shared/page-not-found/page-not-found.component'
-import { CookieModule } from 'ngx-cookie';
-import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component';
-import { CrearReservationsComponent } from './pages/reservations/crear-reservations/crear-reservations.component';
-import { ConsultarReservationsComponent } from './pages/reservations/consultar-reservations/consultar-reservations.component'
+import { CookieModule } from 'ngx-cookie'
+import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
+import {
+    CrearReservationsComponent,
+} from './pages/reservations/crear-reservations/crear-reservations.component'
+import {
+    ConsultarReservationsComponent,
+} from './pages/reservations/consultar-reservations/consultar-reservations.component'
 
 @NgModule(
     {
@@ -29,15 +33,15 @@ import { ConsultarReservationsComponent } from './pages/reservations/consultar-r
             CrearReservationsComponent,
             ConsultarReservationsComponent,
         ],
-        imports     : [
+        imports: [
             BrowserModule,
             AppRoutingModule,
             FormsModule,
             HttpClientModule,
             CookieModule.withOptions(),
         ],
-        providers   : [],
-        bootstrap   : [AppComponent],
+        providers: [],
+        bootstrap: [AppComponent],
     },
 )
 export class AppModule {}

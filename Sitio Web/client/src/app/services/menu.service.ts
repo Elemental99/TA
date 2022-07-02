@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core'
 import { environment } from 'src/environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { IBar } from '../../models/bar'
+import { IMenu } from '../../models/menu'
 
 @Injectable({
     providedIn: 'root',
 })
-export class BarService {
+export class MenuService {
     private url: string = environment.API_URL
 
     constructor(
@@ -15,11 +15,11 @@ export class BarService {
     ) {
     }
 
-    consultar_bares(): Observable<any> {
-        return this.http.get<IBar>(`${this.url}/bar`)
+    consultarMenu(id: string): Observable<any> {
+        return this.http.get<IMenu>(`${this.url}/menu/obtenerMenu/${id}`)
     }
 
-    consultarBar(id: string): Observable<any> {
-        return this.http.get<IBar>(`${this.url}/bar/${id}`)
+    consultarMenuByBar(id: string): Observable<any> {
+        return this.http.get<IMenu>(`${this.url}/menu/obtenerMenuByBar/${id}`)
     }
 }

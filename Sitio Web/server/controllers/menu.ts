@@ -10,10 +10,12 @@ export const obtenerMenus = async(
     const query = { estado: true }
     try {
         const [total, menus]: [Number, IMenu[]] = await Promise.all([
-            Menu.countDocuments(query),
-            Menu.find(query),
+            Menu.countDocuments(
+                query),
+            Menu.find(
+                query),
         ])
-        if ( menus ) {
+        if (menus) {
             return res.status(201).send({
                 total,
                 menus,
@@ -28,11 +30,33 @@ export const obtenerMenus = async(
     }
 }
 
-// const obtenerMenu = async (req, res = response) => {
-// 	const { id } = req.params;
-// 	const menu = await Menu.findById(id);
-// 	res.json(menu);
-// };
+export const obtenerMenu = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { id } = req.params
+    try {
+        const menu = await Menu.findById(id)
+        res.status(200).send({ menu })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const obtenerMenuByBar = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { id } = req.params
+    try {
+        const menu = await Menu.find({ idbar: id }).populate('idplato')
+        res.status(200).send({ menu })
+    } catch (error) {
+        next(error)
+    }
+}
 
 // export const crearMenu = async(req: Request, res: Response) => {
 //     const { ...body } = req.body as IMenu

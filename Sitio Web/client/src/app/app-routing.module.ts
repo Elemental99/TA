@@ -30,7 +30,12 @@ const routes: Routes = [
         pathMatch: 'full',
     },
     {
-        path: 'modificar-reservacion/:id', 
+        path: 'modificar-reservacion/:id',
+        component: CrearReservationsComponent,
+        pathMatch: 'full',
+    },
+    {
+        path: 'crear-reservacion',
         component: CrearReservationsComponent,
         pathMatch: 'full',
     },

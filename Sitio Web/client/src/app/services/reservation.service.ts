@@ -15,7 +15,7 @@ export class ReservationService {
     ) {
     }
 
-    crear_reservacion(data: any): Observable<any> {
+    crear_reservacion(data: IReservacion): Observable<any> {
         return this.http.post<IReservacion>(
             `${this.url}/reservacion`,
             data,
@@ -28,15 +28,21 @@ export class ReservationService {
         )
     }
 
-    eliminar_reservacion(id: string): Observable<any>{
+    consultarReservacionById(id: string): Observable<any> {
+        return this.http.get<IReservacion>(
+            `${this.url}/reservacion/obtenerReservacion/${id}`,
+        )
+    }
+
+    eliminar_reservacion(id: string): Observable<any> {
         return this.http.delete<IReservacion>(
             `${this.url}/reservacion/${id}`,
         )
     }
-    modificar_reservacion(data: any): Observable<any> {
+
+    modificar_reservacion(id: string, data: IReservacion): Observable<any> {
         return this.http.put<IReservacion>(
-            `${this.url}/reservacion`,data
+            `${this.url}/reservacion/${id}`, data,
         )
     }
-
 }

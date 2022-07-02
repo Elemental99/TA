@@ -79,7 +79,7 @@ export const crearReservacion = async(
 ) => {
     const { ...body } = req.body as IReservacion
     try {
-        const reservacion = new Reservacion(body)
+        const reservacion = new Reservacion({ ...body })
         const reservacionNueva = await reservacion.save()
         res.status(201).send({
             message: 'Reservacion creada exitosamente',
