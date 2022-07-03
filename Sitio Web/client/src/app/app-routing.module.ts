@@ -20,11 +20,6 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent, pathMatch: 'full' },
     { path: 'bar', component: IndexBarComponent, pathMatch: 'full' },
     {
-        path: 'crear-reservacion',
-        component: CrearReservationsComponent,
-        pathMatch: 'full',
-    },
-    {
         path: 'consultar-reservacion',
         component: ConsultarReservationsComponent,
         pathMatch: 'full',

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import { IBar } from '../../models/bar'
 
 @Injectable({
-    providedIn: 'root',
+    providedIn : 'root',
 })
 export class BarService {
     private url: string = environment.API_URL
@@ -15,7 +15,7 @@ export class BarService {
     ) {
     }
 
-    consultar_bares(): Observable<any> {
+    consultarBares(): Observable<any> {
         return this.http.get<IBar>(`${this.url}/bar`)
     }
 

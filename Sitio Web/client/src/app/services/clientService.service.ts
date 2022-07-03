@@ -8,12 +8,12 @@ import { IUser } from '../../models/login'
 
 @Injectable(
     {
-        providedIn: 'root',
+        providedIn : 'root',
     })
 
 export class ClientService {
-    private url: string = environment.API_URL
-    private nameCookie = environment.nameCookie
+    private url: string   = environment.API_URL
+    private nameCookie    = environment.nameCookie
     private clientSubject = new BehaviorSubject<string | null>(null)
 
     constructor(
@@ -49,7 +49,7 @@ export class ClientService {
 
     getClient(id: string | undefined): Observable<any> {
         return this.http.get<IClient>(
-            `${this.url}/cliente/ver/${id}`,
+            `${this.url}/cliente/obtenerCliente/${id}`,
         )
     }
 
@@ -62,9 +62,9 @@ export class ClientService {
             this.nameCookie,
             data,
             {
-                expires: new Date(Date.now() + (24 * 60 * 60 * 1000
+                expires : new Date(Date.now() + (24 * 60 * 60 * 1000
                 )),
-                path: '/',
+                path : '/',
             },
         )
     }

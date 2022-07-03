@@ -5,5 +5,5 @@ export const notFound = (
     res: Response,
     next: NextFunction,
 ) => {
-    res.status(404).send({ message: 'Page Not found' })
+    res.status(404).send({ message : 'Page Not found' })
 }

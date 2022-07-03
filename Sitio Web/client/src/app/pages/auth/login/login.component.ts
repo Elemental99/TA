@@ -3,13 +3,11 @@ import { Router } from '@angular/router'
 import { ClientService } from '../../../services/clientService.service'
 import { IUser } from '../../../../models/login'
 
-@Component(
-    {
-        selector: 'app-login',
-        templateUrl: './login.component.html',
-        styleUrls: ['./login.component.css'],
-    },
-)
+@Component({
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+})
 export class LoginComponent implements OnInit {
     public user: string | undefined
     public password: string | undefined

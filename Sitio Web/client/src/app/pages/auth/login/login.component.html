@@ -10,8 +10,9 @@
             placeholder="User"
             class="form-control"
             required
-            [ngClass]="{'is-valid': !userValid.invalid, 'is-invalid':
-            userValid.invalid}"
+            [ngClass]="{
+                'is-valid'  : !userValid.invalid,
+                'is-invalid': userValid.invalid}"
         />
         <div class="invalid-feedback"
              *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">
@@ -31,7 +32,10 @@
             placeholder="Password"
             class="form-control"
             required
-            [ngClass]="{'is-valid': !passwordValid.invalid, 'is-invalid': passwordValid.invalid}"
+            [ngClass]="{
+                'is-valid': !passwordValid.invalid,
+                'is-invalid': passwordValid.invalid
+            }"
         />
         <div class="invalid-feedback" *ngIf="passwordValid.invalid && (passwordValid.dirty ||
         passwordValid.touched)">

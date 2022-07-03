@@ -7,7 +7,7 @@ export const obtenerMenus = async(
     res: Response,
     next: NextFunction,
 ) => {
-    const query = { estado: true }
+    const query = { estado : true }
     try {
         const [total, menus]: [Number, IMenu[]] = await Promise.all([
             Menu.countDocuments(
@@ -22,7 +22,7 @@ export const obtenerMenus = async(
             })
         } else {
             return res.status(400).send({
-                message: 'Menu not found',
+                message : 'Menu not found',
             })
         }
     } catch (error) {
@@ -51,7 +51,21 @@ export const obtenerMenuByBar = async(
 ) => {
     const { id } = req.params
     try {
-        const menu = await Menu.find({ idbar: id }).populate('idplato')
+        const menu = await Menu.find({ idbar : id }).populate('idplato')
+        res.status(200).send({ menu })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const obtenerMenuByPlato = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { id } = req.params
+    try {
+        const menu = await Menu.findOne({ idplato : id })
         res.status(200).send({ menu })
     } catch (error) {
         next(error)

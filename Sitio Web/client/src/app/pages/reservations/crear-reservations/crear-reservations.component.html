@@ -36,11 +36,13 @@
                                     (change)="selectBar($event)"
                                 >
                                     <option disabled selected>
-                                        SELECCIONAR
+                                        {{ nombreBar || 'SELECCIONAR' }}
                                     </option>
                                     <option
-                                        value="{{item._id}}"
-                                        *ngFor="let item of bar">{{item.nombre}}
+                                        [value]="item._id"
+                                        *ngFor="let item of bar"
+                                    >
+                                        {{item.nombre}}
                                         >
                                     </option>
                                 </select>
@@ -53,11 +55,18 @@
                                     required
                                     (change)="selectMenu($event)"
                                 >
-                                    <option value="" disabled selected>
-                                        SELECCIONAR
+                                    <option
+                                        disabled
+                                        selected
+                                    >
+                                        {{ nombrePlato || 'SELECCIONAR' }}
                                     </option>
-                                    <option value="{{item._id}}"
-                                            *ngFor="let item of plato">{{item.nombre_plato}}</option>
+                                    <option
+                                        [value]="item._id"
+                                        *ngFor="let item of plato"
+                                    >
+                                        {{item.nombre_plato}}
+                                    </option>
                                 </select>
                             </div>
                         </div>

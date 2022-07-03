@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment'
 import { IReservacion } from '../../models/reservation'
 
 @Injectable({
-    providedIn: 'root',
+    providedIn : 'root',
 })
 export class ReservationService {
     private url: string = environment.API_URL
@@ -15,14 +15,14 @@ export class ReservationService {
     ) {
     }
 
-    crear_reservacion(data: IReservacion): Observable<any> {
+    crearReservacion(data: IReservacion): Observable<any> {
         return this.http.post<IReservacion>(
             `${this.url}/reservacion`,
             data,
         )
     }
 
-    consultar_reservacion(id: string): Observable<any> {
+    consultarReservacion(id: string): Observable<any> {
         return this.http.get<IReservacion>(
             `${this.url}/reservacion/${id}`,
         )
@@ -34,13 +34,13 @@ export class ReservationService {
         )
     }
 
-    eliminar_reservacion(id: string): Observable<any> {
+    eliminarReservacion(id: string): Observable<any> {
         return this.http.delete<IReservacion>(
             `${this.url}/reservacion/${id}`,
         )
     }
 
-    modificar_reservacion(id: string, data: IReservacion): Observable<any> {
+    modificarReservacion(id: string, data: IReservacion): Observable<any> {
         return this.http.put<IReservacion>(
             `${this.url}/reservacion/${id}`, data,
         )

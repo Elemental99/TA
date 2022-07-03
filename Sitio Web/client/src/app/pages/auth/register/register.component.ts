@@ -3,12 +3,11 @@ import { IClient } from '../../../../models/client'
 import { ClientService } from '../../../services/clientService.service'
 import { Router } from '@angular/router'
 
-@Component(
-    {
-        selector   : 'app-register',
-        templateUrl: './register.component.html',
-        styleUrls  : ['./register.component.css']
-    })
+@Component({
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
+})
 export class RegisterComponent implements OnInit {
     public clientName: string | any
     public identificationCard: string | any
@@ -20,7 +19,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private readonly clientService: ClientService,
-        private readonly router: Router
+        private readonly router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -29,12 +28,12 @@ export class RegisterComponent implements OnInit {
     register(): void {
         const client: IClient = {
             nombre_cliente: this.clientName,
-            cedula        : this.identificationCard,
-            edad          : this.age,
-            telefono      : this.phone,
-            facultad      : this.faculty,
-            user          : this.user,
-            password      : this.password
+            cedula: this.identificationCard,
+            edad: this.age,
+            telefono: this.phone,
+            facultad: this.faculty,
+            user: this.user,
+            password: this.password,
         }
         this.clientService.register(client).subscribe(
             () => {
@@ -42,7 +41,7 @@ export class RegisterComponent implements OnInit {
             },
             error => {
                 console.log(error)
-            }
+            },
         )
     }
 }

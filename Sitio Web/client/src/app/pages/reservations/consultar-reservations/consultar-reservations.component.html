@@ -15,8 +15,6 @@
                     <table class="table table-striped mt-3">
                         <thead>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Cliente</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora</th>
                             <th scope="col">Descripcion</th>
@@ -28,8 +26,6 @@
                             *ngFor="let item of reservacion"
                         >
                         <tr>
-                            <td>{{item._id}}</td>
-                            <td>{{cliente.nombre_cliente}}</td>
                             <td>{{item.fecha}}</td>
                             <td>{{item.hora}}</td>
                             <td>{{item.descripcion}}</td>
