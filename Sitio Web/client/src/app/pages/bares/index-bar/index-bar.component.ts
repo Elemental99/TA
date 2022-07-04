@@ -3,9 +3,9 @@ import { BarService } from 'src/app/services/bar.service'
 import { IBar } from '../../../../models/bar'
 
 @Component({
-    selector    : 'app-index-bar',
-    templateUrl : './index-bar.component.html',
-    styleUrls   : ['./index-bar.component.css'],
+    selector   : 'app-index-bar',
+    templateUrl: './index-bar.component.html',
+    styleUrls  : ['./index-bar.component.css'],
 })
 export class IndexBarComponent implements OnInit {
     public bares: IBar[] | any = []
@@ -16,8 +16,8 @@ export class IndexBarComponent implements OnInit {
         private barService: BarService,
     ) { }
 
-    ngOnInit(): void {
-        this.consultar_bares()
+    async ngOnInit(): Promise<void> {
+        await this.consultar_bares()
     }
 
     // buscar(buscarForm: {value:{filtro:any}}){
@@ -30,11 +30,8 @@ export class IndexBarComponent implements OnInit {
 
     consultar_bares(): void {
         this.barService.consultarBares().subscribe(
-            response => {
-                this.bares = response.bares
-            },
-            error => {
-                console.error(error)
+            (response: any) => {
+                this.bares = response
             },
         )
     }

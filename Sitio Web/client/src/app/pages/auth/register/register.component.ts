@@ -4,9 +4,9 @@ import { ClientService } from '../../../services/clientService.service'
 import { Router } from '@angular/router'
 
 @Component({
-    selector: 'app-register',
+    selector   : 'app-register',
     templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css'],
+    styleUrls  : ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
     public clientName: string | any
@@ -28,12 +28,12 @@ export class RegisterComponent implements OnInit {
     register(): void {
         const client: IClient = {
             nombre_cliente: this.clientName,
-            cedula: this.identificationCard,
-            edad: this.age,
-            telefono: this.phone,
-            facultad: this.faculty,
-            user: this.user,
-            password: this.password,
+            cedula        : this.identificationCard,
+            edad          : this.age,
+            telefono      : this.phone,
+            facultad      : this.faculty,
+            user          : this.user,
+            password      : this.password,
         }
         this.clientService.register(client).subscribe(
             () => {

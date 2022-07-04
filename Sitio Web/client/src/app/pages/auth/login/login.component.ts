@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { ClientService } from '../../../services/clientService.service'
 import { IUser } from '../../../../models/login'
+import { CookieServices } from '../../../services/cookie.service'
 
 @Component({
-    selector: 'app-login',
+    selector   : 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
+    styleUrls  : ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
     public user: string | undefined
     public password: string | undefined
 
     constructor(
-        private readonly clientService: ClientService,
         private readonly router: Router,
+        private readonly cookieService: CookieServices,
     ) { }
 
     ngOnInit(): void {
@@ -22,17 +22,16 @@ export class LoginComponent implements OnInit {
 
     login(): void {
         const client: IUser = {
-            user: String(this.user),
+            user    : String(this.user),
             password: String(this.password),
         }
-        this.clientService.login(client).subscribe(data => {
-            console.log(data)
-            this.clientService.setToken(data.datos._id)
-            this.router.navigateByUrl('/home').then()
-        }, (error) => {
-            console.error(error)
-        }, () => {
-            console.log('Login complete')
-        })
+        this.cookieService.login(client)
+            .subscribe(data => {
+                if (!data) {
+                    console.log('Usuario o contraseña incorrectos')
+                } else {
+                    this.router.navigateByUrl('/home').then()
+                }
+            })
     }
 }

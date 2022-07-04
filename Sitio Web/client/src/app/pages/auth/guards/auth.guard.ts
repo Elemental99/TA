@@ -1,20 +1,30 @@
-import { CanActivate, Router } from '@angular/router'
-import { ClientService } from '../../../services/clientService.service'
+import {
+    ActivatedRouteSnapshot,
+    CanActivate,
+    Router,
+    RouterStateSnapshot,
+    UrlTree,
+} from '@angular/router'
 import { Injectable } from '@angular/core'
+import { CookieServices } from '../../../services/cookie.service'
+import { Observable } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
     constructor(
-        private readonly clientService: ClientService,
-        private readonly route: Router,
+        private readonly router: Router,
+        private readonly cookieService: CookieServices,
     ) { }
 
-    async canActivate(): Promise<boolean> {
-        if (this.clientService.getToken()) {
-            await this.route.navigate(
-                ['/home'])
+    canActivate(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot,
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        if (!this.cookieService.getCookie()) {
+            this.router.navigate(['/home']).then()
             return false
+        } else {
+            return true
         }
-        return true
     }
 }

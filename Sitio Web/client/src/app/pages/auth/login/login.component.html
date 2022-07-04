@@ -12,7 +12,8 @@
             required
             [ngClass]="{
                 'is-valid'  : !userValid.invalid,
-                'is-invalid': userValid.invalid}"
+                'is-invalid': userValid.invalid
+            }"
         />
         <div class="invalid-feedback"
              *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">

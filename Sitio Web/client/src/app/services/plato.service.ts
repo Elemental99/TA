@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
-    providedIn : 'root',
+    providedIn: 'root',
 })
 export class PlatoService {
     private url: string = environment.API_URL

@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment'
 import { IReservacion } from '../../models/reservation'
 
 @Injectable({
-    providedIn : 'root',
+    providedIn: 'root',
 })
 export class ReservationService {
     private url: string = environment.API_URL

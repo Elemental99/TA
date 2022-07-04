@@ -1,33 +1,81 @@
-// import { Injectable } from '@angular/core';
-// import { IClient } from '../../models/client';
-// import { CookieService } from 'ngx-cookie-service';
-// import { BehaviorSubject } from 'rxjs';
-// import { IUser } from '../../models/login';
-//
-// @Injectable(
-//     {
-//         providedIn: 'root'
-//     })
-//
-// export class cookieService {
-//     private observable = new BehaviorSubject<IUser | null>(null);
-//
-//     constructor( private cookies: CookieService) {}
-//
-//     setToken(data: IClient | any): void {
-//         this.cookies.set('token', data, 1);
-//     }
-//
-//     getToken(): string {
-//         return this.cookies.get('token');
-//     }
-//
-//     checkToken(): boolean {
-//         return this.cookies.check('token');
-//     }
-//
-//     deleteToken(): void {
-//         this.observable.next(null);
-//         return this.cookies.delete('token');
-//     }
-// }
+import { Injectable } from '@angular/core'
+import { CookieService } from 'ngx-cookie'
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs'
+import { environment } from '../../environments/environment'
+import { HttpClient } from '@angular/common/http'
+import { IUser } from '../../models/login'
+
+@Injectable(
+    {
+        providedIn: 'root',
+    })
+
+export class CookieServices {
+    private url: string   = environment.API_URL
+    private nameCookie    = environment.nameCookie
+    private nameToken     = environment.nameToken
+    private clientSubject = new BehaviorSubject<string | null>(null)
+
+    constructor(
+        private readonly http: HttpClient,
+        private readonly cookieService: CookieService,
+    ) {
+        this.clientSubject.next(this.getCookie()!)
+    }
+
+    login(client: IUser): Observable<IUser[]> {
+        const { user, password } = client
+        return this.http.post<IUser>(
+            `${this.url}/cliente/login`,
+            {
+                user,
+                password,
+            },
+        ).pipe(
+            tap((data: any) => {
+                if (data) {
+                    console.log(data)
+                    this.setToken(this.nameCookie, data.datos._id)
+                    this.setToken(this.nameToken, data.jwt)
+                    this.clientSubject.next(this.nameCookie)
+                    return data
+                }
+            }),
+            catchError((error: any) => {
+                return throwError(error.error.message)
+            }),
+        )
+    }
+
+    get client$(): Observable<string | null> {
+        return this.clientSubject.asObservable()
+    }
+
+    getCookie(): string | undefined {
+        return this.cookieService.get(this.nameCookie)
+    }
+
+    getToken(): string | undefined {
+        return this.cookieService.get(this.nameToken)
+    }
+
+    removeAllCookies(): void {
+        this.clientSubject.next(null)
+        return this.cookieService.removeAll()
+    }
+
+    private setToken(name: string, data: string): void {
+        this.cookieService.put(
+            name,
+            data,
+            {
+                expires: new Date(
+                    Date.now() + (24 * 60 * 60 * 1000
+                    ),
+                ),
+                path    : '/',
+                sameSite: 'lax',
+            },
+        )
+    }
+}

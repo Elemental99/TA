@@ -10,6 +10,7 @@ import { IBar } from '../../../../models/bar'
 import { IPlato } from '../../../../models/plato'
 import { MenuService } from '../../../services/menu.service'
 import { DatePipe } from '@angular/common'
+import { CookieServices } from '../../../services/cookie.service'
 
 @Component({
     selector   : 'app-crear-reservations',
@@ -42,8 +43,9 @@ export class CrearReservationsComponent implements OnInit {
         private readonly activatedRoute: ActivatedRoute,
         private readonly menuServices: MenuService,
         private readonly datePipe: DatePipe,
+        private readonly cookieService: CookieServices,
     ) {
-        this.token       = this.clientServices.getToken()
+        this.token       = this.cookieService.getCookie()
         this.reservacion = {
             idcliente  : this.token,
             idmenu     : this.idMenu,
@@ -70,7 +72,7 @@ export class CrearReservationsComponent implements OnInit {
     obtenerBares(): void {
         this.barServices.consultarBares().subscribe(
             (response: any) => {
-                this.bar = response.bares
+                this.bar = response
             },
         )
     }
@@ -110,7 +112,7 @@ export class CrearReservationsComponent implements OnInit {
                                             )
                                         this.barServices.consultarBar(idBar).subscribe(
                                             (response: any) => {
-                                                this.nombreBar = response.bar.nombre
+                                                this.nombreBar = response.nombre
                                                 this.obtenerBares()
                                             },
                                         )

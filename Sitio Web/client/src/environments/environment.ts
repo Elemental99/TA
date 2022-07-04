@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     API_URL   : 'http://localhost:4000/v1/sextoA/api',
-    nameCookie: 'token'
+    nameCookie: 'token',
+    nameToken : 'jwt',
 }
 
 /*

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { LoginComponent } from './pages/auth/login/login.component'
@@ -11,7 +11,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component'
 import {
     PageNotFoundComponent,
 } from './shared/page-not-found/page-not-found.component'
-import { CookieModule } from 'ngx-cookie'
+import { CookieModule, CookieService } from 'ngx-cookie'
 import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
 import {
     CrearReservationsComponent,
@@ -19,6 +19,9 @@ import {
 import {
     ConsultarReservationsComponent,
 } from './pages/reservations/consultar-reservations/consultar-reservations.component'
+import {
+    JwtInterceptorsInterceptor,
+} from './interceptors/jwt-interceptors.interceptor'
 
 @NgModule(
     {
@@ -40,7 +43,14 @@ import {
             HttpClientModule,
             CookieModule.withOptions(),
         ],
-        providers: [],
+        providers: [
+            CookieService,
+            {
+                provide : HTTP_INTERCEPTORS,
+                useClass: JwtInterceptorsInterceptor,
+                multi   : true,
+            },
+        ],
         bootstrap: [AppComponent],
     },
 )

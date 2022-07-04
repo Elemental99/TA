@@ -13,18 +13,20 @@ export const obtenerClientes = async(
 ) => {
     // const { limite = 10, desde = 0 } = req.query;
     const query = { estado: true }
-    
+
     try {
         const [total, client]: [Number, ICliente[]] = await Promise.all([
-            Cliente.countDocuments(query),
-            Cliente.find(query),
+            Cliente.countDocuments(
+                query),
+            Cliente.find(
+                query),
         ])
-        if ( client ) {
+        if (client) {
             return res.status(201)
-            .json({
-                total,
-                client,
-            })
+                .json({
+                    total,
+                    client,
+                })
         }
         return res.status(400).send('No hay clientes')
     } catch (error) {
@@ -38,17 +40,16 @@ export const obtenerClienteById = async(
     next: NextFunction,
 ) => {
     const { id } = req.params
-    
+
     try {
         const cliente: ICliente | null = await Cliente.findById(id)
-        if ( cliente ) return res.status(201).send({ cliente: cliente })
+        if (cliente) return res.status(201).send({ cliente })
         return res.status(400).send({
             message: 'No hay cliente',
         })
     } catch (error) {
         next(error)
     }
-    
 }
 
 export const crearCliente = async(
@@ -70,15 +71,15 @@ export const crearCliente = async(
             password: passwordHash,
             ...body,
         }
-        
+
         const clienteExiste = await Cliente.findOne({ user: body.user })
-        if ( clienteExiste ) {
+        if (clienteExiste) {
             const { user } = clienteExiste
             res.status(400).json({
                 message: `El cliente con este usuario ya existe ${user}`,
             })
         }
-        
+
         const cliente      = new Cliente(newClient)
         const clienteNuevo = await cliente.save()
         res.status(201).send({
@@ -117,11 +118,11 @@ export const loginCliente = async(
 ) => {
     const { body } = req
     const { user } = body
-    
+
     try {
         const clientelogeado = await Cliente.findOne({ user })
-        
-        if ( !clientelogeado ) {
+
+        if (!clientelogeado) {
             return res.status(400).send({
                 message: `El cliente con este nombre no existe ${body.user}`,
             })
@@ -133,7 +134,7 @@ export const loginCliente = async(
                 String(body.password),
                 String(password),
             )
-        if ( passwordCorrecto && clientelogeado ) {
+        if (passwordCorrecto && clientelogeado) {
             return res.status(201).send({
                 jwt    : jwt(clientelogeado),
                 datos  : clientelogeado,
@@ -141,7 +142,7 @@ export const loginCliente = async(
             })
         }
         res.status(400).send({
-            message: `Cliente no encontrado`,
+            message: 'Cliente no encontrado',
         })
     } catch (error) {
         next(error)

@@ -1,30 +1,30 @@
 import { NextFunction, Request, Response } from 'express'
 
 const ERROR_HANDLERS: any = {
-    MongoNotConnectedError : (res: Response) =>
+    MongoNotConnectedError: (res: Response) =>
         res.status(500).send({
-            error : 'Error de conexión con la base de datos',
+            error: 'Error de conexión con la base de datos',
         }),
-    CastError : (res: Response) =>
+    CastError: (res: Response) =>
         res.status(400).send({
-            message : 'Id incorrecto',
+            message: 'Id incorrecto',
         }),
-    ValidationError : (res: Response, { message }: any) =>
+    ValidationError: (res: Response, { message }: any) =>
         res.status(409)
             .send({
-                error : message,
+                error: message,
             }),
-    JsonWebTokenError : (res: Response) =>
+    JsonWebTokenError: (res: Response) =>
         res.status(401).json({
-            error : 'Token no valido',
+            error: 'Token no encontrado',
         }),
-    TokenExpiredError : (res: Response) =>
+    TokenExpiredError: (res: Response) =>
         res.status(498).json({
-            error : 'Token expirado',
+            error: 'Token expirado',
         }),
-    defaultError : (res: Response) =>
+    defaultError: (res: Response) =>
         res.status(500).send({
-            message : 'Error del servidor',
+            message: 'Error del servidor',
         }),
 }
 

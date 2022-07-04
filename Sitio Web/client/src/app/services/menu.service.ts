@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import { IMenu } from '../../models/menu'
 
 @Injectable({
-    providedIn : 'root',
+    providedIn: 'root',
 })
 export class MenuService {
     private url: string = environment.API_URL

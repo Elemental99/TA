@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core'
-import { ClientService } from '../../services/clientService.service'
+import { CookieServices } from '../../services/cookie.service'
 
 @Component(
     {
         selector   : 'app-navbar',
         templateUrl: './navbar.component.html',
-        styleUrls  : ['./navbar.component.css']
+        styleUrls  : ['./navbar.component.css'],
     })
 export class NavbarComponent implements OnInit {
-    public user$ = this.clientService.client$
+    public user$ = this.cookieService.client$
 
     constructor(
-        private readonly clientService: ClientService,
+        private readonly cookieService: CookieServices,
     ) { }
 
     ngOnInit(): void {
     }
 
     logout(): void {
-        this.clientService.deleteToken()
+        this.cookieService.removeAllCookies()
     }
-
 }
