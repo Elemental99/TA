@@ -91,11 +91,14 @@ export class CrearReservationsComponent implements OnInit {
                 this.reservationServices.consultarReservacionById( this.id )
                     .subscribe(
                         ( response: any ) => {
-                            this.idMenu      = response.reservacion.idmenu
-                            this.fecha       = this.datePipe.transform(
+                            this.idMenu = response.reservacion.idmenu
+                            this.fecha  = this.datePipe.transform(
                                 response.reservacion.fecha,
                                 'yyyy-MM-dd',
+                                'UTC',
                             )
+                            console.log( this.fecha )
+                            console.log( response.reservacion.fecha )
                             this.hora        = response.reservacion.hora
                             this.descripcion = response.reservacion.descripcion
                             this.menuServices.consultarMenu( this.idMenu )
@@ -136,7 +139,6 @@ export class CrearReservationsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.router.navigate( ['/home'] ).then()
-                    this.obtenerBares()
                 } )
     }
 
