@@ -8,9 +8,8 @@ module.exports = {
             node: {
                 extensions: [
                     '.js',
-                    '.jsx',
                     '.ts',
-                    '.tsx',
+                    '.html',
                 ],
             },
         },
@@ -49,5 +48,6 @@ module.exports = {
             },
         ],
         'no-multi-spaces': 'off',
+        'space-in-parens': ['error', 'always'],
     },
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { IClient } from '../../../../models/client'
-import { ClientService } from '../../../services/clientService.service'
 import { Router } from '@angular/router'
+import { ClientService } from '../../../services/clientService.service'
+import { IClient } from '../../../../models/client'
 
 @Component({
     selector   : 'app-register',

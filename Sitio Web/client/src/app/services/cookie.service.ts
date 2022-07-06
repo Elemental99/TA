@@ -11,16 +11,16 @@ import { IUser } from '../../models/login'
     })
 
 export class CookieServices {
-    private url: string   = environment.API_URL
-    private nameCookie    = environment.nameCookie
-    private nameToken     = environment.nameToken
-    private clientSubject = new BehaviorSubject<string | null>(null)
+    private url: string = environment.API_URL
+    private nameCookie  = environment.nameCookie
+    private nameToken   = environment.nameToken
+    private loggedIn    = new BehaviorSubject<string>('')
 
     constructor(
         private readonly http: HttpClient,
         private readonly cookieService: CookieService,
     ) {
-        this.clientSubject.next(this.getCookie()!)
+        this.loggedIn.next(this.getCookie()!)
     }
 
     login(client: IUser): Observable<IUser[]> {
@@ -37,7 +37,7 @@ export class CookieServices {
                     console.log(data)
                     this.setToken(this.nameCookie, data.datos._id)
                     this.setToken(this.nameToken, data.jwt)
-                    this.clientSubject.next(this.nameCookie)
+                    this.loggedIn.next(this.nameCookie)
                     return data
                 }
             }),
@@ -47,8 +47,8 @@ export class CookieServices {
         )
     }
 
-    get client$(): Observable<string | null> {
-        return this.clientSubject.asObservable()
+    get isLoggedIn() {
+        return this.loggedIn.asObservable()
     }
 
     getCookie(): string | undefined {
@@ -60,7 +60,7 @@ export class CookieServices {
     }
 
     removeAllCookies(): void {
-        this.clientSubject.next(null)
+        this.loggedIn.next('')
         return this.cookieService.removeAll()
     }
 

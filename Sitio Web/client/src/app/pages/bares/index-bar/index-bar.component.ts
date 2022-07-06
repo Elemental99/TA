@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { BarService } from 'src/app/services/bar.service'
+import { BarService } from '../../../services/bar.service'
 import { IBar } from '../../../../models/bar'
 
 @Component({

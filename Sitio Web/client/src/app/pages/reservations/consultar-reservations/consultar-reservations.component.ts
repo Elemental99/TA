@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ReservationService } from 'src/app/services/reservation.service'
+import { ReservationService } from '../../../services/reservation.service'
 import { IReservacion } from '../../../../models/reservation'
 import { DatePipe } from '@angular/common'
 import { CookieServices } from '../../../services/cookie.service'

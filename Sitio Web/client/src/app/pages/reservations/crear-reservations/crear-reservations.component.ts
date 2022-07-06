@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { BarService } from 'src/app/services/bar.service'
-import { ClientService } from 'src/app/services/clientService.service'
-import { PlatoService } from 'src/app/services/plato.service'
-import { ReservationService } from 'src/app/services/reservation.service'
-import { IReservacion } from 'src/models/reservation'
+import { BarService } from '../../../services/bar.service'
+import { ClientService } from '../../../services/clientService.service'
+import { PlatoService } from '../../../services/plato.service'
+import { ReservationService } from '../../../services/reservation.service'
+import { IReservacion } from '../../../../models/reservation'
 import { ActivatedRoute, Router } from '@angular/router'
 import { IClient } from '../../../../models/client'
 import { IBar } from '../../../../models/bar'
@@ -12,12 +12,12 @@ import { MenuService } from '../../../services/menu.service'
 import { DatePipe } from '@angular/common'
 import { CookieServices } from '../../../services/cookie.service'
 
-@Component({
+@Component( {
     selector   : 'app-crear-reservations',
     templateUrl: './crear-reservations.component.html',
     styleUrls  : ['./crear-reservations.component.css'],
     providers  : [DatePipe],
-})
+} )
 export class CrearReservationsComponent implements OnInit {
     public cliente: IClient[] | any = []
     public bar: IBar[] | any        = []
@@ -32,7 +32,6 @@ export class CrearReservationsComponent implements OnInit {
     private idMenu: string | any
     private idBar: string | any
     private readonly token: string | any
-    private readonly reservacion: IReservacion
 
     constructor(
         private readonly clientServices: ClientService,
@@ -45,14 +44,7 @@ export class CrearReservationsComponent implements OnInit {
         private readonly datePipe: DatePipe,
         private readonly cookieService: CookieServices,
     ) {
-        this.token       = this.cookieService.getCookie()
-        this.reservacion = {
-            idcliente  : this.token,
-            idmenu     : this.idMenu,
-            fecha      : this.fecha,
-            hora       : this.hora,
-            descripcion: this.descripcion,
-        }
+        this.token = this.cookieService.getCookie()
     }
 
     ngOnInit(): void {
@@ -62,8 +54,8 @@ export class CrearReservationsComponent implements OnInit {
     }
 
     obtenerClientes(): void {
-        this.clientServices.getClient(this.token).subscribe(
-            (response: any) => {
+        this.clientServices.getClient( this.token ).subscribe(
+            ( response: any ) => {
                 this.cliente = response.cliente
             },
         )
@@ -71,26 +63,34 @@ export class CrearReservationsComponent implements OnInit {
 
     obtenerBares(): void {
         this.barServices.consultarBares().subscribe(
-            (response: any) => {
+            ( response: any ) => {
                 this.bar = response
             },
         )
     }
 
     crearReservacion(): void {
-        this.reservationServices.crearReservacion(this.reservacion).subscribe(
+        const reservacion: IReservacion = {
+            idcliente  : this.token,
+            idmenu     : this.idMenu,
+            fecha      : this.fecha,
+            hora       : this.hora,
+            descripcion: this.descripcion,
+
+        }
+        this.reservationServices.crearReservacion( reservacion ).subscribe(
             () => {
-                this.router.navigate(['/home']).then()
-            })
+                this.router.navigate( ['/home'] ).then()
+            } )
     }
 
     cargarDatosReservacion(): void {
-        this.activatedRoute.params.subscribe(({ id: _id }) => {
+        this.activatedRoute.params.subscribe( ( { id: _id } ) => {
             this.id = _id
-            if (this.id) {
-                this.reservationServices.consultarReservacionById(this.id)
+            if ( this.id ) {
+                this.reservationServices.consultarReservacionById( this.id )
                     .subscribe(
-                        (response: any) => {
+                        ( response: any ) => {
                             this.idMenu      = response.reservacion.idmenu
                             this.fecha       = this.datePipe.transform(
                                 response.reservacion.fecha,
@@ -98,60 +98,69 @@ export class CrearReservationsComponent implements OnInit {
                             )
                             this.hora        = response.reservacion.hora
                             this.descripcion = response.reservacion.descripcion
-                            this.menuServices.consultarMenu(this.idMenu)
+                            this.menuServices.consultarMenu( this.idMenu )
                                 .subscribe(
-                                    (response: any) => {
+                                    ( response: any ) => {
                                         const idPlato = response.menu.idplato
                                         const idBar   = response.menu.idbar
-                                        this.consultMenuByBar(idBar)
-                                        this.platoServices.consultarPlato(idPlato)
+                                        this.consultMenuByBar( idBar )
+                                        this.platoServices.consultarPlato( idPlato )
                                             .subscribe(
-                                                (response: any) => {
+                                                ( response: any ) => {
                                                     this.nombrePlato = response.plato.nombre_plato
                                                 },
                                             )
-                                        this.barServices.consultarBar(idBar).subscribe(
-                                            (response: any) => {
+                                        this.barServices.consultarBar( idBar ).subscribe(
+                                            ( response: any ) => {
                                                 this.nombreBar = response.nombre
                                                 this.obtenerBares()
                                             },
                                         )
-                                    })
+                                    } )
                         },
                     )
             }
-        })
+        } )
     }
 
     modificarReservacion(): void {
-        this.reservationServices.modificarReservacion(this.id, this.reservacion)
+        const reservacion: IReservacion = {
+            idcliente  : this.token,
+            idmenu     : this.idMenu,
+            fecha      : this.fecha,
+            hora       : this.hora,
+            descripcion: this.descripcion,
+
+        }
+        this.reservationServices.modificarReservacion( this.id, reservacion )
             .subscribe(
                 () => {
-                    this.router.navigate(['/home']).then()
-                })
+                    this.router.navigate( ['/home'] ).then()
+                    this.obtenerBares()
+                } )
     }
 
-    selectBar(event: any): void {
+    selectBar( event: any ): void {
         this.idBar = event.target.value
-        this.consultMenuByBar(this.idBar)
+        this.consultMenuByBar( this.idBar )
     }
 
-    selectMenu($event: any) {
+    selectMenu( $event: any ) {
         const idPlato = $event.target.value
-        this.menuServices.consultarMenuByPlato(idPlato).subscribe(
-            (response: any) => {
+        this.menuServices.consultarMenuByPlato( idPlato ).subscribe(
+            ( response: any ) => {
                 this.idMenu = response.menu._id
             },
         )
     }
 
-    consultMenuByBar(idBar: string): void {
-        this.menuServices.consultarMenuByBar(idBar)
+    consultMenuByBar( idBar: string ): void {
+        this.menuServices.consultarMenuByBar( idBar )
             .subscribe(
-                (response: any) => {
-                    this.plato = response.menu.map((response: any) => {
+                ( response: any ) => {
+                    this.plato = response.menu.map( ( response: any ) => {
                         return response.idplato
-                    })
+                    } )
                 },
             )
     }

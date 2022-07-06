@@ -7,8 +7,8 @@ import {
     HttpRequest,
 } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
-import { CookieServices } from '../services/cookie.service'
 import { Router } from '@angular/router'
+import { CookieServices } from '../services/cookie.service'
 
 @Injectable()
 export class JwtInterceptorsInterceptor implements HttpInterceptor {
