@@ -1,4 +1,4 @@
-<div class="login">
+<!-- <div class="login">
     <form class="custom-form" (ngSubmit)="login()" #form="ngForm">
         <h1>Login</h1>
         <input
@@ -51,4 +51,80 @@
             in
         </button>
     </form>
+</div> -->
+
+<div class="container w-75 mt-5 rounded-3 shadow">
+    <div class="row align-items-stretch">
+        <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6">
+            
+        </div>
+        <div class="col bg-der p-5 rounded-3">
+            <div class="text-end">
+                <img src="/assets/img/logo2.png" width="70px" alt="LogoUleam">
+            </div>
+
+            <h2 class="fw-bold text-center py-5">Bienvenido de vuelta</h2>
+
+
+            <form class="custom-form" (ngSubmit)="login()" #form="ngForm">
+                <div class="mb-4">
+                    <label for="user" class="form-label">Nombre de usuario</label>
+                    <input 
+                    class="form-control"
+                    type="text"
+                    #userValid="ngModel"
+                    [(ngModel)]="user"
+                    name="user"
+                    minlength=4
+                    required
+                    [ngClass]="{
+                        'is-valid'  : !userValid.invalid,
+                        'is-invalid': userValid.invalid
+                    }"
+                    placeholder="Ingrese su usuario">
+                    <!-- Validacion -->
+                    <div class="invalid-feedback"
+                        *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">
+                        <div *ngIf="userValid.errors?.['minlength']">
+                            El usuario debe tener al menos 4 caracteres
+                        </div>
+                        <div *ngIf="userValid.errors?.['required']">
+                            El nombre de usuario es requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password"
+                    #passwordValid="ngModel"
+                    [(ngModel)]="password"
+                    name="password"
+                    minlength=4
+                    class="form-control"
+                    required
+                    [ngClass]="{
+                        'is-valid': !passwordValid.invalid,
+                        'is-invalid': passwordValid.invalid
+                    }"
+                    placeholder="Ingrese su contraseña">
+                    <div class="invalid-feedback" *ngIf="passwordValid.invalid && (passwordValid.dirty ||
+                    passwordValid.touched)">
+                        <div *ngIf="passwordValid.errors?.['minlength']">
+                            La contraseña debe tener al menos 4 caracteres
+                        </div>
+                        <div *ngIf="passwordValid.errors?.['required']">
+                            La contraseña es requerida
+                        </div>
+                    </div>
+                </div>
+                <!-- gap-2 col-6 mx-auto -->
+                <div class="d-grid pt-3"> 
+                    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Iniciar Sesión</button>
+                </div>
+                <div class="my-3 text-center">
+                    <span>¿No tienes una cuenta? <a class="ur" [routerLink]="['/register']" > Regístrate aquí</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
