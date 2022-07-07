@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment'
 @Injectable(
     {
         providedIn: 'root',
-    })
+    } )
 
 export class ClientService {
     private url: string = environment.API_URL
@@ -16,14 +16,14 @@ export class ClientService {
         private http: HttpClient,
     ) {}
 
-    register(client: IClient): Observable<any> {
+    register( client: IClient ): Observable<any> {
         return this.http.post<IClient>(
             `${this.url}/cliente`,
             client,
         )
     }
 
-    getClient(id: string): Observable<any> {
+    getClient( id: string ): Observable<any> {
         return this.http.get<IClient>(
             `${this.url}/cliente/obtenerCliente/${id}`,
         )

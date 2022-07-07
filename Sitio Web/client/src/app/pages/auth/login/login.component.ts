@@ -3,11 +3,11 @@ import { Router } from '@angular/router'
 import { IUser } from '../../../../models/login'
 import { CookieServices } from '../../../services/cookie.service'
 
-@Component({
+@Component( {
     selector   : 'app-login',
     templateUrl: './login.component.html',
     styleUrls  : ['./login.component.css'],
-})
+} )
 export class LoginComponent implements OnInit {
     public user: string | undefined
     public password: string | undefined
@@ -22,16 +22,16 @@ export class LoginComponent implements OnInit {
 
     login(): void {
         const client: IUser = {
-            user    : String(this.user),
-            password: String(this.password),
+            user    : String( this.user ),
+            password: String( this.password ),
         }
-        this.cookieService.login(client)
-            .subscribe(data => {
-                if (!data) {
-                    console.log('Usuario o contraseña incorrectos')
+        this.cookieService.login( client )
+            .subscribe( data => {
+                if ( !data ) {
+                    console.log( 'Usuario o contraseña incorrectos' )
                 } else {
-                    this.router.navigateByUrl('/home').then()
+                    this.router.navigateByUrl( '/home' ).then()
                 }
-            })
+            } )
     }
 }

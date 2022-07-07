@@ -4,9 +4,9 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { IMenu } from '../../models/menu'
 
-@Injectable({
+@Injectable( {
     providedIn: 'root',
-})
+} )
 export class MenuService {
     private url: string = environment.API_URL
 
@@ -15,15 +15,15 @@ export class MenuService {
     ) {
     }
 
-    consultarMenu(id: string): Observable<any> {
-        return this.http.get<IMenu>(`${this.url}/menu/obtenerMenu/${id}`)
+    consultarMenu( id: string ): Observable<any> {
+        return this.http.get<IMenu>( `${this.url}/menu/obtenerMenu/${id}` )
     }
 
-    consultarMenuByBar(id: string): Observable<any> {
-        return this.http.get<IMenu>(`${this.url}/menu/obtenerMenuByBar/${id}`)
+    consultarMenuByBar( id: string ): Observable<any> {
+        return this.http.get<IMenu>( `${this.url}/menu/obtenerMenuByBar/${id}` )
     }
 
-    consultarMenuByPlato(id: string): Observable<any> {
-        return this.http.get<IMenu>(`${this.url}/menu/obtenerMenuByPlato/${id}`)
+    consultarMenuByPlato( id: string ): Observable<any> {
+        return this.http.get<IMenu>( `${this.url}/menu/obtenerMenuByPlato/${id}` )
     }
 }

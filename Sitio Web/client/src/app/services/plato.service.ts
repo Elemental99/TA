@@ -4,9 +4,9 @@ import { Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { IPlato } from '../../models/plato'
 
-@Injectable({
+@Injectable( {
     providedIn: 'root',
-})
+} )
 export class PlatoService {
     private url: string = environment.API_URL
 
@@ -16,10 +16,10 @@ export class PlatoService {
     }
 
     consultarPlatos(): Observable<any> {
-        return this.http.get<IPlato>(`${this.url}/plato`)
+        return this.http.get<IPlato>( `${this.url}/plato` )
     }
 
-    consultarPlato(id: string): Observable<any> {
-        return this.http.get<IPlato>(`${this.url}/plato/${id}`)
+    consultarPlato( id: string ): Observable<any> {
+        return this.http.get<IPlato>( `${this.url}/plato/${id}` )
     }
 }

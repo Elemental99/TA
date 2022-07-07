@@ -3,11 +3,11 @@ import { Router } from '@angular/router'
 import { ClientService } from '../../../services/clientService.service'
 import { IClient } from '../../../../models/client'
 
-@Component({
+@Component( {
     selector   : 'app-register',
     templateUrl: './register.component.html',
     styleUrls  : ['./register.component.css'],
-})
+} )
 export class RegisterComponent implements OnInit {
     public clientName: string | any
     public identificationCard: string | any
@@ -35,12 +35,12 @@ export class RegisterComponent implements OnInit {
             user          : this.user,
             password      : this.password,
         }
-        this.clientService.register(client).subscribe(
+        this.clientService.register( client ).subscribe(
             () => {
-                this.router.navigateByUrl('/login').then()
+                this.router.navigateByUrl( '/login' ).then()
             },
             error => {
-                console.log(error)
+                console.log( error )
             },
         )
     }

@@ -4,9 +4,9 @@ import { Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { IReservacion } from '../../models/reservation'
 
-@Injectable({
+@Injectable( {
     providedIn: 'root',
-})
+} )
 export class ReservationService {
     private url: string = environment.API_URL
 
@@ -15,32 +15,32 @@ export class ReservationService {
     ) {
     }
 
-    crearReservacion(data: IReservacion): Observable<any> {
+    crearReservacion( data: IReservacion ): Observable<any> {
         return this.http.post<IReservacion>(
             `${this.url}/reservacion`,
             data,
         )
     }
 
-    consultarReservacion(id: string): Observable<any> {
+    consultarReservacion( id: string ): Observable<any> {
         return this.http.get<IReservacion>(
             `${this.url}/reservacion/${id}`,
         )
     }
 
-    consultarReservacionById(id: string): Observable<any> {
+    consultarReservacionById( id: string ): Observable<any> {
         return this.http.get<IReservacion>(
             `${this.url}/reservacion/obtenerReservacion/${id}`,
         )
     }
 
-    eliminarReservacion(id: string): Observable<any> {
+    eliminarReservacion( id: string ): Observable<any> {
         return this.http.delete<IReservacion>(
             `${this.url}/reservacion/${id}`,
         )
     }
 
-    modificarReservacion(id: string, data: IReservacion): Observable<any> {
+    modificarReservacion( id: string, data: IReservacion ): Observable<any> {
         return this.http.put<IReservacion>(
             `${this.url}/reservacion/${id}`, data,
         )

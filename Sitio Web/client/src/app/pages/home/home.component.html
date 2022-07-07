@@ -1,6 +1,17 @@
 <p>{{ clientName }}</p>
 
 <section class="inicio">
-    <h1>Bienvenido a Bares Uleam <br> Conoce información de los bares <br> dentro de la institución</h1>
-    <button class="botonhome">Reserva Aquí</button>
+    <h1>Bienvenido a Bares Uleam <br> Conoce información de los bares <br>
+        dentro de la institución</h1>
+    <ng-container *ngIf="isLoggedIn$ | async; else isLooged">
+
+        <button class="botonhome" [routerLink]="['/crear-reservacion']">Reserva
+            Aquí
+        </button>
+    </ng-container>
+    <ng-template #isLooged>
+        <button class="botonhome" [routerLink]="['/login']">Reserva
+            Aquí
+        </button>
+    </ng-template>
 </section>

@@ -3,27 +3,36 @@
         <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6"></div>
         <div class="col bg-der py-5 rounded-3">
             <div class="text-end mx-3">
-                <img src="/assets/img/logo2.png" width="70px" alt="LogoUleam">
+                <img
+                    src="/assets/img/logo2.png"
+                    width="70px"
+                    alt="LogoUleam"
+                />
             </div>
-            <h2 class="fw-bold text-center mx-5 py-2">Ingrese sus datos para registarse</h2>
-            <!-- <div class="form"> -->
-                <form class="custom-form" (ngSubmit)="register()" #form="ngForm">
-                    <div class="mb-2 mx-3">
-                    <label for="nombre" class="form-label">Nombre y Apellido</label>
-                    <input type="text"
-                    #nameValid="ngModel"
-                    [(ngModel)]="clientName"
-                    name="nombre_cliente"
-                    minlength="10"
-                    class="form-control"
-                    placeholder="Nombre Completo"
-                    required
-                    pattern="[a-zA-Z ]*"
-                    [ngClass]="{'is-valid': !nameValid.invalid, 'is-invalid':
+            <h2 class="fw-bold text-center mx-5 py-2">
+                Ingrese sus datos para registarse
+            </h2>
+            <!--<div class="form">-->
+            <form class="custom-form" (ngSubmit)="register()" #form="ngForm">
+                <div class="mb-2 mx-3">
+                    <label for="nombre" class="form-label">Nombre y
+                        Apellido</label>
+                    <input
+                        type="text"
+                        #nameValid="ngModel"
+                        [(ngModel)]="clientName"
+                        name="nombre_cliente"
+                        minlength="10"
+                        class="form-control"
+                        required
+                        pattern="[a-zA-Z ]*"
+                        [ngClass]="{'is-valid': !nameValid.invalid, 'is-invalid':
                     nameValid.invalid}"
-                    placeholder="Ingrese su nombre">
-                    <div class="invalid-feedback"
-                        *ngIf="nameValid.invalid && (nameValid.dirty || nameValid.touched)">
+                        placeholder="Ingrese su nombre">
+                    <div
+                        class="invalid-feedback"
+                        *ngIf="nameValid.invalid &&
+                        (nameValid.dirty || nameValid.touched)">
                         <div *ngIf="nameValid.errors?.['minlength']">
                             El nombre debe tener al menos 10 caracteres
                         </div>
@@ -34,23 +43,26 @@
                             El nombre debe contener solo letras
                         </div>
                     </div>
-                    </div>
-                    <div class="row align-items-stretch">
+                </div>
+                <div class="row align-items-stretch">
                     <div class="col">
                         <div class="mb-2 ms-3">
                             <label for="user" class="form-label">Usuario</label>
-                            <input type="text"
-                            #userValid="ngModel"
-                            [(ngModel)]="user"
-                            name="user"
-                            minlength="4"
-                            class="form-control"
-                            required
-                            [ngClass]="{'is-valid': !userValid.invalid, 'is-invalid':
-                            userValid.invalid}" 
-                            placeholder="Ingrese su usuario">
-                            <div class="invalid-feedback"
-                                *ngIf="userValid.invalid && (userValid.dirty || userValid.touched)">
+                            <input
+                                type="text"
+                                #userValid="ngModel"
+                                [(ngModel)]="user"
+                                name="user"
+                                minlength="4"
+                                class="form-control"
+                                required
+                                [ngClass]="{'is-valid': !userValid.invalid, 'is-invalid':
+                            userValid.invalid}"
+                                placeholder="Ingrese su usuario">
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="userValid.invalid &&
+                                (userValid.dirty || userValid.touched)">
                                 <div *ngIf="userValid.errors?.['minlength']">
                                     El usuario debe tener al menos 4 caracteres
                                 </div>
@@ -60,20 +72,30 @@
                             </div>
                         </div>
                         <div class="mb-2 ms-3">
-                            <label for="cedula" class="form-label">Cedula</label>
-                            <input type="text"
-                            #cedulaValid="ngModel"
-                            [(ngModel)]="identificationCard"
-                            name="cedula"
-                            minlength="10"
-                            maxlength="10"
-                            class="form-control"
-                            required
-                            pattern="[0-9]*"
-                            [ngClass]="{'is-valid': !cedulaValid.invalid, 'is-invalid':
-                            cedulaValid.invalid}" placeholder="Ingrese su cédula">
-                            <div class="invalid-feedback"
-                                *ngIf="cedulaValid.invalid && (cedulaValid.dirty || cedulaValid.touched)">
+                            <label
+                                for="cedula"
+                                class="form-label"
+                            >Cedula
+                            </label>
+                            <input
+                                type="text"
+                                #cedulaValid="ngModel"
+                                [(ngModel)]="identificationCard"
+                                name="cedula"
+                                minlength="10"
+                                maxlength="10"
+                                class="form-control"
+                                required
+                                pattern="[0-9]*"
+                                [ngClass]="{
+                                    'is-valid': !cedulaValid.invalid,
+                                    'is-invalid': cedulaValid.invalid
+                                }"
+                                placeholder="Ingrese su cédula">
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="cedulaValid.invalid &&
+                                (cedulaValid.dirty || cedulaValid.touched)">
                                 <div *ngIf="cedulaValid.errors?.['minlength']">
                                     La cedula debe tener al menos 10 caracteres
                                 </div>
@@ -86,20 +108,29 @@
                             </div>
                         </div>
                         <div class="mb-2 ms-3">
-                            <label for="facultad" class="form-label">Facultad</label>
-                            <input type="text"
-                            #facultyValid="ngModel"
-                            [(ngModel)]="faculty"
-                            name="facultad"
-                            minlength="4"
-                            class="form-control"
-                            required
-                            pattern="[a-zA-Z ]*"
-                            [ngClass]="{'is-valid': !facultyValid.invalid, 'is-invalid':
-                            facultyValid.invalid}" 
-                            placeholder="Ingrese su Facultad">
-                            <div class="invalid-feedback"
-                                *ngIf="facultyValid.invalid && (facultyValid.dirty || facultyValid.touched)">
+                            <label
+                                for="facultad"
+                                class="form-label"
+                            >Facultad
+                            </label>
+                            <input
+                                type="text"
+                                #facultyValid="ngModel"
+                                [(ngModel)]="faculty"
+                                name="facultad"
+                                minlength="4"
+                                class="form-control"
+                                required
+                                pattern="[a-zA-Z ]*"
+                                [ngClass]="{
+                                    'is-valid': !facultyValid.invalid,
+                                    'is-invalid': facultyValid.invalid
+                                }"
+                                placeholder="Ingrese su Facultad">
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="facultyValid.invalid &&
+                                (facultyValid.dirty || facultyValid.touched)">
                                 <div *ngIf="facultyValid.errors?.['minlength']">
                                     La facultad debe tener al menos 4 caracteres
                                 </div>
@@ -112,25 +143,36 @@
                             </div>
                         </div>
                     </div>
-                
 
                     <div class="col">
                         <div class="mb-2 me-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password"
-                            #passwordValid="ngModel"
-                            [(ngModel)]="password"
-                            name="password"
-                            minlength="4"
-                            class="form-control"
-                            required="required"
-                            [ngClass]="{'is-valid': !passwordValid.invalid, 'is-invalid':
-                            passwordValid.invalid}" 
-                            placeholder="Ingrese su contraseña">
-                            <div class="invalid-feedback"
-                                *ngIf="passwordValid.invalid && (passwordValid.dirty || passwordValid.touched)">
-                                <div *ngIf="passwordValid.errors?.['minlength']">
-                                    La contraseña debe tener al menos 4 caracteres
+                            <label
+                                for="password"
+                                class="form-label"
+                            >Contraseña
+                            </label>
+                            <input
+                                type="password"
+                                #passwordValid="ngModel"
+                                [(ngModel)]="password"
+                                name="password"
+                                minlength="4"
+                                class="form-control"
+                                required="required"
+                                [ngClass]="{
+                                    'is-valid': !passwordValid.invalid,
+                                    'is-invalid':passwordValid.invalid
+                                }"
+                                placeholder="Ingrese su contraseña">
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="passwordValid.invalid &&
+                                (passwordValid.dirty || passwordValid.touched)"
+                            >
+                                <div
+                                    *ngIf="passwordValid.errors?.['minlength']">
+                                    La contraseña debe tener al menos 4
+                                    caracteres
                                 </div>
                                 <div *ngIf="passwordValid.errors?.['required']">
                                     La contraseña debe ser requerida
@@ -138,23 +180,33 @@
                             </div>
                         </div>
                         <div class="mb-2 me-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel"
-                            #phoneValid="ngModel"
-                            [(ngModel)]="phone"
-                            name="telefono"
-                            maxlength="10"
-                            minlength="10"
-                            class="form-control"
-                            required
-                            pattern="[0-9]*"
-                            [ngClass]="{'is-valid': !phoneValid.invalid, 'is-invalid':
-                            phoneValid.invalid}"
-                            placeholder="Ingrese su teléfono">
-                            <div class="invalid-feedback"
-                                *ngIf="phoneValid.invalid && (phoneValid.dirty || phoneValid.touched)">
+                            <label
+                                for="telefono"
+                                class="form-label"
+                            >Teléfono
+                            </label>
+                            <input
+                                type="tel"
+                                #phoneValid="ngModel"
+                                [(ngModel)]="phone"
+                                name="telefono"
+                                maxlength="10"
+                                minlength="10"
+                                class="form-control"
+                                required
+                                pattern="[0-9]*"
+                                [ngClass]="{
+                                    'is-valid': !phoneValid.invalid,
+                                    'is-invalid': phoneValid.invalid
+                                }"
+                                placeholder="Ingrese su teléfono">
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="phoneValid.invalid &&
+                                (phoneValid.dirty || phoneValid.touched)">
                                 <div *ngIf="phoneValid.errors?.['minlength']">
-                                    El teléfono debe tener al menos 10 caracteres
+                                    El teléfono debe tener al menos 10
+                                    caracteres
                                 </div>
                                 <div *ngIf="phoneValid.errors?.['required']">
                                     El teléfono debe ser requerido
@@ -166,19 +218,24 @@
                         </div>
                         <div class="mb-2 me-3">
                             <label for="edad" class="form-label">Edad</label>
-                            <input type="text"
-                            #ageValid="ngModel"
-                            [(ngModel)]="age"
-                            name="edad"
-                            minlength="2"
-                            class="form-control"
-                            required
-                            pattern="[0-9]*"
-                            [ngClass]="{'is-valid': !ageValid.invalid, 'is-invalid':
-                            ageValid.invalid}" 
-                            placeholder="Ingrese su edad">
-                            <div class="invalid-feedback"
-                                *ngIf="ageValid.invalid && (ageValid.dirty || ageValid.touched)">
+                            <input
+                                type="text"
+                                #ageValid="ngModel"
+                                [(ngModel)]="age"
+                                name="edad"
+                                minlength="2"
+                                class="form-control"
+                                required
+                                pattern="[0-9]*"
+                                [ngClass]="{
+                                    'is-valid': !ageValid.invalid,
+                                    'is-invalid': ageValid.invalid
+                                }"
+                                placeholder="Ingrese su edad">
+                            <div
+                                class="invalid-feedback"
+                                *ngIf="ageValid.invalid &&
+                                (ageValid.dirty || ageValid.touched)">
                                 <div *ngIf="ageValid.errors?.['minlength']">
                                     La edad debe tener al menos 2 caracteres
                                 </div>
@@ -187,18 +244,19 @@
                                 </div>
                                 <div *ngIf="ageValid.errors?.['pattern']">
                                     La edad debe ser un valor numérico
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-            </div>
+                </div>
+
+                <!-- Botón -->
+                <div class="d-grid pt-3 mx-3">
+                    <button type="submit" class="btn btn-primary"
+                            [disabled]="!form.valid">Registrarse
+                    </button>
+                </div>
+            </form>
         </div>
-            
-            <!-- Botón -->
-            <div class="d-grid pt-3 mx-3"> 
-                <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Registrarse</button>
-            </div>
-        </form>
-        </div>        
-    </div>   
+    </div>
 </div>

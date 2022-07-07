@@ -8,22 +8,22 @@ import { IUser } from '../../models/login'
 @Injectable(
     {
         providedIn: 'root',
-    })
+    } )
 
 export class CookieServices {
     private url: string = environment.API_URL
     private nameCookie  = environment.nameCookie
     private nameToken   = environment.nameToken
-    private loggedIn    = new BehaviorSubject<string>('')
+    private loggedIn    = new BehaviorSubject<string>( '' )
 
     constructor(
         private readonly http: HttpClient,
         private readonly cookieService: CookieService,
     ) {
-        this.loggedIn.next(this.getCookie()!)
+        this.loggedIn.next( this.getCookie()! )
     }
 
-    login(client: IUser): Observable<IUser[]> {
+    login( client: IUser ): Observable<IUser[]> {
         const { user, password } = client
         return this.http.post<IUser>(
             `${this.url}/cliente/login`,
@@ -32,18 +32,18 @@ export class CookieServices {
                 password,
             },
         ).pipe(
-            tap((data: any) => {
-                if (data) {
-                    console.log(data)
-                    this.setToken(this.nameCookie, data.datos._id)
-                    this.setToken(this.nameToken, data.jwt)
-                    this.loggedIn.next(this.nameCookie)
+            tap( ( data: any ) => {
+                if ( data ) {
+                    console.log( data )
+                    this.setToken( this.nameCookie, data.datos._id )
+                    this.setToken( this.nameToken, data.jwt )
+                    this.loggedIn.next( this.nameCookie )
                     return data
                 }
-            }),
-            catchError((error: any) => {
-                return throwError(error.error.message)
-            }),
+            } ),
+            catchError( ( error: any ) => {
+                return throwError( error.error.message )
+            } ),
         )
     }
 
@@ -52,25 +52,25 @@ export class CookieServices {
     }
 
     getCookie(): string | undefined {
-        return this.cookieService.get(this.nameCookie)
+        return this.cookieService.get( this.nameCookie )
     }
 
     getToken(): string | undefined {
-        return this.cookieService.get(this.nameToken)
+        return this.cookieService.get( this.nameToken )
     }
 
     removeAllCookies(): void {
-        this.loggedIn.next('')
+        this.loggedIn.next( '' )
         return this.cookieService.removeAll()
     }
 
-    private setToken(name: string, data: string): void {
+    private setToken( name: string, data: string ): void {
         this.cookieService.put(
             name,
             data,
             {
                 expires: new Date(
-                    Date.now() + (24 * 60 * 60 * 1000
+                    Date.now() + ( 24 * 60 * 60 * 1000
                     ),
                 ),
                 path    : '/',

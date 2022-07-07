@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core'
 import { BarService } from '../../../services/bar.service'
 import { IBar } from '../../../../models/bar'
 
-@Component({
+@Component( {
     selector   : 'app-index-bar',
     templateUrl: './index-bar.component.html',
     styleUrls  : ['./index-bar.component.css'],
-})
+} )
 export class IndexBarComponent implements OnInit {
     public bares: IBar[] | any = []
 
@@ -30,7 +30,7 @@ export class IndexBarComponent implements OnInit {
 
     consultar_bares(): void {
         this.barService.consultarBares().subscribe(
-            (response: any) => {
+            ( response: any ) => {
                 this.bares = response
             },
         )
