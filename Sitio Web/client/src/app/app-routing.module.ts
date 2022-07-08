@@ -14,6 +14,7 @@ import { RegisterComponent } from './pages/auth/register/register.component'
 import {
     PageNotFoundComponent,
 } from './shared/page-not-found/page-not-found.component'
+import { AuthGuard } from './guards/auth.guard'
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -38,14 +39,16 @@ const routes: Routes = [
         canActivate: [CookieGuard],
     },
     {
-        path     : 'login',
-        component: LoginComponent,
-        pathMatch: 'full',
+        path       : 'login',
+        component  : LoginComponent,
+        pathMatch  : 'full',
+        canActivate: [AuthGuard],
     },
     {
-        path     : 'register',
-        component: RegisterComponent,
-        pathMatch: 'full',
+        path       : 'register',
+        component  : RegisterComponent,
+        pathMatch  : 'full',
+        canActivate: [AuthGuard],
     },
     { path: '**', component: PageNotFoundComponent, pathMatch: 'full' },
 ]
