@@ -16,21 +16,21 @@ export class Server {
     private _express: Express
 
     constructor() {
-        this.app = Router()
+        this.app    = Router()
         this.router = Router()
-        this.port = Number(process.env.PORT) || 4100
-        this.paths = {
-            bar: '/api/bar',
-            cliente: '/api/cliente',
-            menu: '/api/menu',
-            plato: '/api/plato',
+        this.port   = Number( process.env.PORT ) || 4100
+        this.paths  = {
+            bar        : '/api/bar',
+            cliente    : '/api/cliente',
+            menu       : '/api/menu',
+            plato      : '/api/plato',
             reservacion: '/api/reservacion',
         }
         this.conectarDB().then()
         this.middlewares()
         this.routes()
-        this.router.use('/v1/sextoA', this.app)
-        this._express = express().use(this.router)
+        this.router.use( '/v1/sextoA', this.app )
+        this._express = express().use( this.router )
     }
 
     async conectarDB() {
@@ -38,23 +38,23 @@ export class Server {
     }
 
     middlewares() {
-        this.app.use(cors())
-        this.app.use(express.json())
-        this.app.use(express.urlencoded({ extended: true }))
+        this.app.use( cors() )
+        this.app.use( express.json() )
+        this.app.use( express.urlencoded( { extended: true } ) )
     }
 
     routes() {
-        this.app.use(this.paths.bar, routeBar)
-        this.app.use(this.paths.cliente, routeCliente)
-        this.app.use(this.paths.menu, routeMenu)
-        this.app.use(this.paths.plato, routePlato)
-        this.app.use(this.paths.reservacion, routeReservacion)
-        this.app.use(notFound)
+        this.app.use( this.paths.bar, routeBar )
+        this.app.use( this.paths.cliente, routeCliente )
+        this.app.use( this.paths.menu, routeMenu )
+        this.app.use( this.paths.plato, routePlato )
+        this.app.use( this.paths.reservacion, routeReservacion )
+        this.app.use( notFound )
     }
 
     listen() {
-        this._express.listen(this.port, () => {
-            console.log(`Servidor corriendo en el puerto ${this.port}`)
-        })
+        this._express.listen( this.port, () => {
+            console.log( `Servidor corriendo en el puerto ${this.port}` )
+        } )
     }
 }

@@ -9,25 +9,25 @@ export const obtenerPlatos = async(
 ) => {
     const query = { estado: true }
     try {
-        const [total, platos]: [Number, IPlato[]] = await Promise.all([
+        const [total, platos]: [Number, IPlato[]] = await Promise.all( [
             Plato.countDocuments(
-                query),
+                query ),
             Plato.find(
-                query),
-        ])
-        if (platos.length === 0) {
-            return res.status(400).json({
+                query ),
+        ] )
+        if ( platos.length === 0 ) {
+            return res.status( 400 ).json( {
                 message: 'No hay platos',
             },
             )
         } else {
-            return res.status(201).json({
+            return res.status( 201 ).json( {
                 total,
                 platos,
-            })
+            } )
         }
-    } catch (error) {
-        next(error)
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -38,10 +38,10 @@ export const obtenerPlato = async(
 ) => {
     const { id } = req.params
     try {
-        const plato = await Plato.findById(id)
-        res.json({ plato })
-    } catch (error) {
-        next(error)
+        const plato = await Plato.findById( id )
+        res.json( { plato } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -50,20 +50,20 @@ export const crearPlato = async(
     res: Response,
     next: NextFunction,
 ) => {
-    const { ...body } = req.body as IPlato
+    const { ...body }      = req.body as IPlato
     const { nombre_plato } = body
     try {
-        const platoExiste = await Plato.findOne({ nombre: nombre_plato })
-        if (platoExiste) {
-            res.status(400).json({
+        const platoExiste = await Plato.findOne( { nombre: nombre_plato } )
+        if ( platoExiste ) {
+            res.status( 400 ).json( {
                 message: `El plato que desea crear ya existe ${nombre_plato}`,
-            })
+            } )
         }
-        const plato = new Plato(body)
+        const plato      = new Plato( body )
         const platoNuevo = await plato.save()
-        res.status(201).json(platoNuevo)
-    } catch (error) {
-        next(error)
+        res.status( 201 ).json( platoNuevo )
+    } catch ( error ) {
+        next( error )
     }
 }
 

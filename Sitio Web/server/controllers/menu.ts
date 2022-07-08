@@ -7,26 +7,26 @@ export const obtenerMenus = async(
     res: Response,
     next: NextFunction,
 ) => {
-    const query = { estado : true }
+    const query = { estado: true }
     try {
-        const [total, menus]: [Number, IMenu[]] = await Promise.all([
+        const [total, menus]: [Number, IMenu[]] = await Promise.all( [
             Menu.countDocuments(
-                query),
+                query ),
             Menu.find(
-                query),
-        ])
-        if (menus) {
-            return res.status(201).send({
+                query ),
+        ] )
+        if ( menus ) {
+            return res.status( 201 ).send( {
                 total,
                 menus,
-            })
+            } )
         } else {
-            return res.status(400).send({
-                message : 'Menu not found',
-            })
+            return res.status( 400 ).send( {
+                message: 'Menu not found',
+            } )
         }
-    } catch (error) {
-        next(error)
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -37,10 +37,10 @@ export const obtenerMenu = async(
 ) => {
     const { id } = req.params
     try {
-        const menu = await Menu.findById(id)
-        res.status(200).send({ menu })
-    } catch (error) {
-        next(error)
+        const menu = await Menu.findById( id )
+        res.status( 200 ).send( { menu } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -51,10 +51,10 @@ export const obtenerMenuByBar = async(
 ) => {
     const { id } = req.params
     try {
-        const menu = await Menu.find({ idbar : id }).populate('idplato')
-        res.status(200).send({ menu })
-    } catch (error) {
-        next(error)
+        const menu = await Menu.find( { idbar: id } ).populate( 'idplato' )
+        res.status( 200 ).send( { menu } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -65,10 +65,10 @@ export const obtenerMenuByPlato = async(
 ) => {
     const { id } = req.params
     try {
-        const menu = await Menu.findOne({ idplato : id })
-        res.status(200).send({ menu })
-    } catch (error) {
-        next(error)
+        const menu = await Menu.findOne( { idplato: id } )
+        res.status( 200 ).send( { menu } )
+    } catch ( error ) {
+        next( error )
     }
 }
 

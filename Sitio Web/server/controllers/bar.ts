@@ -9,24 +9,21 @@ export const obtenerBares = async(
 ) => {
     const query = { estado: true }
     try {
-        const [total, bares]: [Number, IBar[]] = await Promise.all([
+        const [total, bares]: [Number, IBar[]] = await Promise.all( [
             await Bar.countDocuments(
-                query),
+                query ),
             await Bar.find(
-                query),
-        ])
-        if (bares) {
-            res.status(201).send({
+                query ),
+        ] )
+
+        bares === null
+            ? res.status( 400 ).send( { message: 'Bares not found' } )
+            : res.status( 201 ).send( {
                 total,
                 bares,
-            })
-        } else {
-            res.status(400).send({
-                message: 'Bares not found',
-            })
-        }
-    } catch (error) {
-        next(error)
+            } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -37,16 +34,13 @@ export const obtenerBarById = async(
 ) => {
     const { id } = req.params
     try {
-        const bar: IBar | null = await Bar.findById(id)
-        if (bar) {
-            res.json({ bar })
-        } else {
-            res.status(400).send({
-                message: 'Bar not found',
-            })
-        }
-    } catch (error) {
-        next(error)
+        const bar: IBar | null = await Bar.findById( id )
+
+        bar === null
+            ? res.status( 400 ).send( { message: 'Bar not found' } )
+            : res.json( { bar } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -57,34 +51,60 @@ export const crearBar = async(
 ) => {
     const { ...body } = req.body as IBar
     try {
-        const barExiste = await Bar.findOne({ nombre: body.nombre })
-        if (barExiste) {
+        const barExiste = await Bar.findOne( { nombre: body.nombre } )
+        if ( barExiste ) {
             const { nombre } = barExiste
-            res.status(400).json({
+            return res.status( 400 ).json( {
                 message: `El bar con ese nombre ya existe ${nombre}`,
-            })
+            } )
         }
-        const bar = new Bar(body)
+
+        const bar      = new Bar( body )
         const barNuevo = await bar.save()
-        res.status(201).json({ bar: barNuevo })
-    } catch (error) {
-        next(error)
+        res.status( 201 ).json( { bar: barNuevo } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
-// const actualizarBar = async(req: Request, res: Response) => {
-//     const { id }        = req.params
-//     const { ...data }   = req.body as IBar
-//     const barModificado: IBar | null = await Bar.findByIdAndUpdate(id, data, { new: true })
-//     res.status(201).json(barModificado)
-// }
+export const actualizarBar = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { id } = req.params
+    try {
+        const { ...data }                = req.body as IBar
+        const barModificado: IBar | null = await Bar.findByIdAndUpdate(
+            id,
+            data,
+            { new: true },
+        )
 
-// const borrarBar = async(req: Request, res: Response) => {
-//     const { id }                  = req.params
-//     const barBorrado: IBar | null = await Bar.findByIdAndUpdate(
-//         id,
-//         { estado: false },
-//         { new: true },
-//     )
-//     res.status(201).json(barBorrado)
-// }
+        barModificado === null
+            ? res.status( 400 ).send( { message: 'Bar not found' } )
+            : res.status( 201 ).json( { bar: barModificado } )
+    } catch ( error ) {
+        next( error )
+    }
+}
+
+export const borrarBar = async(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    const { id } = req.params
+    try {
+        const barBorrado: IBar | null = await Bar.findByIdAndDelete(
+            id,
+            { estado: false, new: true },
+        )
+
+        barBorrado === null
+            ? res.status( 400 ).send( { message: 'Bar not found' } )
+            : res.status( 201 ).json( { bar: barBorrado } )
+    } catch ( error ) {
+        next( error )
+    }
+}

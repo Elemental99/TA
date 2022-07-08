@@ -1,19 +1,19 @@
 import mongoose, { model, Schema } from 'mongoose'
 import { IReservacion } from '../interfaces'
 
-const ReservacionSchema: mongoose.Schema = new Schema<IReservacion>({
+const ReservacionSchema: mongoose.Schema = new Schema<IReservacion>( {
     idcliente: {
         type: Schema.Types.ObjectId,
-        ref: 'Cliente',
+        ref : 'Cliente',
     },
     idmenu: {
         type: Schema.Types.ObjectId,
-        ref: 'Menu',
+        ref : 'Menu',
     },
-    fecha: Date,
-    hora: String,
+    fecha      : Date,
+    hora       : String,
     descripcion: String,
-})
+} )
 
 const Reservacion: mongoose.Model<IReservacion> = model<IReservacion>(
     'Reservacion',

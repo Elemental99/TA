@@ -1,31 +1,31 @@
 import { NextFunction, Request, Response } from 'express'
 
 const ERROR_HANDLERS: any = {
-    MongoNotConnectedError: (res: Response) =>
-        res.status(500).send({
+    MongoNotConnectedError: ( res: Response ) =>
+        res.status( 500 ).send( {
             error: 'Error de conexión con la base de datos',
-        }),
-    CastError: (res: Response) =>
-        res.status(400).send({
+        } ),
+    CastError: ( res: Response ) =>
+        res.status( 400 ).send( {
             message: 'Id incorrecto',
-        }),
-    ValidationError: (res: Response, { message }: any) =>
-        res.status(409)
-            .send({
+        } ),
+    ValidationError: ( res: Response, { message }: any ) =>
+        res.status( 409 )
+            .send( {
                 error: message,
-            }),
-    JsonWebTokenError: (res: Response) =>
-        res.status(401).json({
+            } ),
+    JsonWebTokenError: ( res: Response ) =>
+        res.status( 401 ).json( {
             error: 'Token no encontrado',
-        }),
-    TokenExpiredError: (res: Response) =>
-        res.status(498).json({
+        } ),
+    TokenExpiredError: ( res: Response ) =>
+        res.status( 498 ).json( {
             error: 'Token expirado',
-        }),
-    defaultError: (res: Response) =>
-        res.status(500).send({
+        } ),
+    defaultError: ( res: Response ) =>
+        res.status( 500 ).send( {
             message: 'Error del servidor',
-        }),
+        } ),
 }
 
 export const handleErrors = (
@@ -37,5 +37,5 @@ export const handleErrors = (
     const handler = ERROR_HANDLERS[error.name] ||
         ERROR_HANDLERS.defaultError
 
-    handler(res, error)
+    handler( res, error )
 }

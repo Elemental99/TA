@@ -15,22 +15,22 @@ export const obtenerClientes = async(
     const query = { estado: true }
 
     try {
-        const [total, client]: [Number, ICliente[]] = await Promise.all([
+        const [total, client]: [Number, ICliente[]] = await Promise.all( [
             Cliente.countDocuments(
-                query),
+                query ),
             Cliente.find(
-                query),
-        ])
-        if (client) {
-            return res.status(201)
-                .json({
+                query ),
+        ] )
+        if ( client ) {
+            return res.status( 201 )
+                .json( {
                     total,
                     client,
-                })
+                } )
         }
-        return res.status(400).send('No hay clientes')
-    } catch (error) {
-        next(error)
+        return res.status( 400 ).send( 'No hay clientes' )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -42,13 +42,13 @@ export const obtenerClienteById = async(
     const { id } = req.params
 
     try {
-        const cliente: ICliente | null = await Cliente.findById(id)
-        if (cliente) return res.status(201).send({ cliente })
-        return res.status(400).send({
-            message: 'No hay cliente',
-        })
-    } catch (error) {
-        next(error)
+        const cliente: ICliente | null = await Cliente.findById( id )
+        if ( cliente ) return res.status( 201 ).send( { cliente } )
+        return res.status( 400 ).send( {
+            message: 'No existe el cliente',
+        } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -64,7 +64,7 @@ export const crearCliente = async(
         } = req.body as ICliente
     try {
         const passwordHash = await bcrypt.hash(
-            String(password),
+            String( password ),
             saltRounds,
         )
         const newClient    = {
@@ -72,22 +72,22 @@ export const crearCliente = async(
             ...body,
         }
 
-        const clienteExiste = await Cliente.findOne({ user: body.user })
-        if (clienteExiste) {
+        const clienteExiste = await Cliente.findOne( { user: body.user } )
+        if ( clienteExiste ) {
             const { user } = clienteExiste
-            res.status(400).json({
+            res.status( 400 ).json( {
                 message: `El cliente con este usuario ya existe ${user}`,
-            })
+            } )
         }
 
-        const cliente      = new Cliente(newClient)
+        const cliente      = new Cliente( newClient )
         const clienteNuevo = await cliente.save()
-        res.status(201).send({
+        res.status( 201 ).send( {
             clienteNuevo,
             message: 'Usuario registrado',
-        })
-    } catch (error) {
-        next(error)
+        } )
+    } catch ( error ) {
+        next( error )
     }
 }
 
@@ -120,31 +120,31 @@ export const loginCliente = async(
     const { user } = body
 
     try {
-        const clientelogeado = await Cliente.findOne({ user })
+        const clientelogeado = await Cliente.findOne( { user } )
 
-        if (!clientelogeado) {
-            return res.status(400).send({
+        if ( !clientelogeado ) {
+            return res.status( 400 ).send( {
                 message: `El cliente con este nombre no existe ${body.user}`,
-            })
+            } )
         }
         const { password }     = clientelogeado
         const passwordCorrecto = clientelogeado === null
             ? false
             : await bcrypt.compare(
-                String(body.password),
-                String(password),
+                String( body.password ),
+                String( password ),
             )
-        if (passwordCorrecto && clientelogeado) {
-            return res.status(201).send({
-                jwt    : jwt(clientelogeado),
+        if ( passwordCorrecto && clientelogeado ) {
+            return res.status( 201 ).send( {
+                jwt    : jwt( clientelogeado ),
                 datos  : clientelogeado,
                 message: 'Cliente logeado',
-            })
+            } )
         }
-        res.status(400).send({
+        res.status( 400 ).send( {
             message: 'Cliente no encontrado',
-        })
-    } catch (error) {
-        next(error)
+        } )
+    } catch ( error ) {
+        next( error )
     }
 }

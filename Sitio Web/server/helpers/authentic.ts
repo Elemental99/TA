@@ -8,16 +8,16 @@ export const isAuthenticated = async(
     res: Response,
     next: NextFunction,
 ) => {
-    const authorization      = req.get('authorization')
+    const authorization      = req.get( 'authorization' )
     let token: string | null = null
-    if ( authorization && authorization.toLowerCase().startsWith('bearer') ) {
-        token = authorization.split(' ')[1]
+    if ( authorization && authorization.toLowerCase().startsWith( 'bearer' ) ) {
+        token = authorization.split( ' ' )[1]
     }
-    
+
     try {
-        await jwt.verify(String(token), String(secret))
+        await jwt.verify( String( token ), String( secret ) )
         return next()
-    } catch (error) {
-        next(error)
+    } catch ( error ) {
+        next( error )
     }
 }

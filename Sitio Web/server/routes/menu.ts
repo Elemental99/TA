@@ -10,14 +10,14 @@ import { isAuthenticated } from '../helpers/authentic'
 
 const router = Router()
 
-router.get('/', isAuthenticated, obtenerMenus)
-router.get('/obtenerMenu/:id', isAuthenticated, obtenerMenu)
-router.get('/obtenerMenuByBar/:id', isAuthenticated, obtenerMenuByBar)
-router.get('/obtenerMenuByPlato/:id', isAuthenticated, obtenerMenuByPlato)
+router.get( '/', isAuthenticated, obtenerMenus )
+router.get( '/obtenerMenu/:id', isAuthenticated, obtenerMenu )
+router.get( '/obtenerMenuByBar/:id', isAuthenticated, obtenerMenuByBar )
+router.get( '/obtenerMenuByPlato/:id', isAuthenticated, obtenerMenuByPlato )
 // router.post('/', crearMenu);
 // router.put('/:id', actualizarMenu);
 // router.delete('/:id', borrarMenu);
 
-router.use(handleErrors)
+router.use( handleErrors )
 
 export default router
