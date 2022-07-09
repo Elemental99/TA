@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { IUser } from '../../../../models/login'
+import { IUser } from '../../../shared/models/login'
 import { CookieServices } from '../../../services/cookie.service'
 
 @Component( {
@@ -26,12 +26,8 @@ export class LoginComponent implements OnInit {
             password: String( this.password ),
         }
         this.cookieService.login( client )
-            .subscribe( data => {
-                if ( !data ) {
-                    console.log( 'Usuario o contraseña incorrectos' )
-                } else {
-                    this.router.navigateByUrl( '/home' ).then()
-                }
+            .subscribe( () => {
+                this.router.navigateByUrl( '/home' ).then()
             } )
     }
 }

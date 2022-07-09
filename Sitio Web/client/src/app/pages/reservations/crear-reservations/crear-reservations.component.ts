@@ -3,11 +3,11 @@ import { BarService } from '../../../services/bar.service'
 import { ClientService } from '../../../services/clientService.service'
 import { PlatoService } from '../../../services/plato.service'
 import { ReservationService } from '../../../services/reservation.service'
-import { IReservacion } from '../../../../models/reservation'
+import { IReservacion } from '../../../shared/models/reservation'
 import { ActivatedRoute, Router } from '@angular/router'
-import { IClient } from '../../../../models/client'
-import { IBar } from '../../../../models/bar'
-import { IPlato } from '../../../../models/plato'
+import { IClient } from '../../../shared/models/client'
+import { IBar } from '../../../shared/models/bar'
+import { IPlato } from '../../../shared/models/plato'
 import { MenuService } from '../../../services/menu.service'
 import { DatePipe } from '@angular/common'
 import { CookieServices } from '../../../services/cookie.service'
@@ -78,10 +78,15 @@ export class CrearReservationsComponent implements OnInit {
             descripcion: this.descripcion,
 
         }
-        this.reservationServices.crearReservacion( reservacion ).subscribe(
-            () => {
-                this.router.navigate( ['/home'] ).then()
-            } )
+        if ( reservacion.idmenu && reservacion.fecha && reservacion.hora &&
+            reservacion.descripcion ) {
+            this.reservationServices.crearReservacion( reservacion ).subscribe(
+                () => {
+                    this.router.navigate( ['/home'] ).then()
+                } )
+        } else {
+            alert( 'Todos los campos son obligatorios' )
+        }
     }
 
     cargarDatosReservacion(): void {
@@ -133,11 +138,16 @@ export class CrearReservationsComponent implements OnInit {
             descripcion: this.descripcion,
 
         }
-        this.reservationServices.modificarReservacion( this.id, reservacion )
-            .subscribe(
-                () => {
-                    this.router.navigate( ['/home'] ).then()
-                } )
+        if ( reservacion.idmenu && reservacion.fecha && reservacion.hora &&
+            reservacion.descripcion ) {
+            this.reservationServices.modificarReservacion( this.id, reservacion )
+                .subscribe(
+                    () => {
+                        this.router.navigate( ['/home'] ).then()
+                    } )
+        } else {
+            alert( 'Todos los campos son obligatorios' )
+        }
     }
 
     selectBar( event: any ): void {

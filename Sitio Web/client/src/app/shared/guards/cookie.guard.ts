@@ -7,7 +7,7 @@ import {
 } from '@angular/router'
 import { Injectable } from '@angular/core'
 import { map, Observable } from 'rxjs'
-import { CookieServices } from '../services/cookie.service'
+import { CookieServices } from '../../services/cookie.service'
 
 @Injectable( { providedIn: 'root' } )
 export class CookieGuard implements CanActivate {

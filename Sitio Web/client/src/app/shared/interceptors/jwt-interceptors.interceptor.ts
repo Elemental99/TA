@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http'
 import { catchError, Observable, throwError } from 'rxjs'
 import { Router } from '@angular/router'
-import { CookieServices } from '../services/cookie.service'
+import { CookieServices } from '../../services/cookie.service'
 
 @Injectable()
 export class JwtInterceptorsInterceptor implements HttpInterceptor {
@@ -23,20 +23,20 @@ export class JwtInterceptorsInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<unknown>> {
         const token = this.cookieService.getToken()
         let req     = request
-        if (token) {
-            req = request.clone({
+        if ( token ) {
+            req = request.clone( {
                 setHeaders: {
                     Authorization: `Bearer ${token}`,
                 },
-            })
+            } )
         }
-        return next.handle(req).pipe(
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === 401) {
-                    this.router.navigate(['/home']).then()
+        return next.handle( req ).pipe(
+            catchError( ( error: HttpErrorResponse ) => {
+                if ( error.status === 401 ) {
+                    this.router.navigate( ['/home'] ).then()
                 }
-                return throwError(error.error.error)
-            }),
+                return throwError( error.error.message )
+            } ),
         )
     }
 }

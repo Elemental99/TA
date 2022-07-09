@@ -13,7 +13,7 @@ import {
 } from './pages/reservations/consultar-reservations/consultar-reservations.component'
 import {
     JwtInterceptorsInterceptor,
-} from './interceptors/jwt-interceptors.interceptor'
+} from './shared/interceptors/jwt-interceptors.interceptor'
 import { LoginComponent } from './pages/auth/login/login.component'
 import { RegisterComponent } from './pages/auth/register/register.component'
 import { HomeComponent } from './pages/home/home.component'

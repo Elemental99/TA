@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { BarService } from '../../../services/bar.service'
-import { IBar } from '../../../../models/bar'
+import { IBar } from '../../../shared/models/bar'
 
 @Component( {
     selector   : 'app-index-bar',

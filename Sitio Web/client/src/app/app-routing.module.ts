@@ -5,7 +5,7 @@ import { IndexBarComponent } from './pages/bares/index-bar/index-bar.component'
 import {
     ConsultarReservationsComponent,
 } from './pages/reservations/consultar-reservations/consultar-reservations.component'
-import { CookieGuard } from './guards/cookie.guard'
+import { CookieGuard } from './shared/guards/cookie.guard'
 import {
     CrearReservationsComponent,
 } from './pages/reservations/crear-reservations/crear-reservations.component'
@@ -14,7 +14,7 @@ import { RegisterComponent } from './pages/auth/register/register.component'
 import {
     PageNotFoundComponent,
 } from './shared/page-not-found/page-not-found.component'
-import { AuthGuard } from './guards/auth.guard'
+import { AuthGuard } from './shared/guards/auth.guard'
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },

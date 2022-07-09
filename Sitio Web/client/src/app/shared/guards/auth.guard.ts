@@ -7,7 +7,7 @@ import {
     UrlTree,
 } from '@angular/router'
 import { map, Observable } from 'rxjs'
-import { CookieServices } from '../services/cookie.service'
+import { CookieServices } from '../../services/cookie.service'
 
 @Injectable( {
     providedIn: 'root',

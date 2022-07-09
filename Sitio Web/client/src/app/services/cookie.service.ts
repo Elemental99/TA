@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
 import { CookieService } from 'ngx-cookie'
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs'
+import { BehaviorSubject, Observable, tap } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { IUser } from '../../models/login'
+import { IUser } from '../shared/models/login'
 
 @Injectable(
     {
@@ -34,15 +34,11 @@ export class CookieServices {
         ).pipe(
             tap( ( data: any ) => {
                 if ( data ) {
-                    console.log( data )
                     this.setToken( this.nameCookie, data.datos._id )
                     this.setToken( this.nameToken, data.jwt )
                     this.loggedIn.next( this.nameCookie )
                     return data
                 }
-            } ),
-            catchError( ( error: any ) => {
-                return throwError( error.error.message )
             } ),
         )
     }

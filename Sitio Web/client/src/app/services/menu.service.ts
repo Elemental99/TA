@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { environment } from '../../environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { IMenu } from '../../models/menu'
+import { IMenu } from '../shared/models/menu'
 
 @Injectable( {
     providedIn: 'root',

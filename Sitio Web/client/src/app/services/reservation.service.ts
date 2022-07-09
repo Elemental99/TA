@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { IReservacion } from '../../models/reservation'
+import { IReservacion } from '../shared/models/reservation'
 
 @Injectable( {
     providedIn: 'root',
@@ -19,6 +19,12 @@ export class ReservationService {
         return this.http.post<IReservacion>(
             `${this.url}/reservacion`,
             data,
+        ).pipe(
+            map( ( response: any ) => {
+                if ( response ) {
+                    return response
+                }
+            } ),
         )
     }
 

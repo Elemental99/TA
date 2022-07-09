@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ReservationService } from '../../../services/reservation.service'
-import { IReservacion } from '../../../../models/reservation'
+import { IReservacion } from '../../../shared/models/reservation'
 import { DatePipe } from '@angular/common'
 import { CookieServices } from '../../../services/cookie.service'
 
