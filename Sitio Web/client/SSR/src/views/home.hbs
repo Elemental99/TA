@@ -1,0 +1,15 @@
+<link href="/css/home.css" rel="stylesheet"/>
+<section class="inicio">
+    <h1>Bienvenido a Bares Uleam <br> Conoce información de los bares <br>
+        dentro de la institución</h1>
+    {{#if user}}
+        <button class="botonhome" onclick="location.href =
+        '/crear-reservacion';">Reserva
+            Aquí
+        </button>
+    {{else}}
+        <button class="botonhome" onclick="location.href = '/login';">Reserva
+            Aquí
+        </button>
+    {{/if}}
+</section>

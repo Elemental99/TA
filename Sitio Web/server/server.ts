@@ -1,5 +1,7 @@
 import express, { Express, Router } from 'express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
+
 import { dbConnection } from './database/config'
 import routeBar from './routes/bar'
 import routeCliente from './routes/cliente'
@@ -40,7 +42,8 @@ export class Server {
     middlewares() {
         this.app.use( cors() )
         this.app.use( express.json() )
-        this.app.use( express.urlencoded( { extended: true } ) )
+        this.app.use( express.urlencoded( { extended: false } ) )
+        this.app.use( cookieParser() )
     }
 
     routes() {
